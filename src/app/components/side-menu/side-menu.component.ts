@@ -30,6 +30,9 @@ export class SideMenuComponent implements OnInit {
   ];
   globalStatisticsLinks = [];
   storageConfigurationLinks = [];
+  sanInfraLinks = [
+    {id: 1, linkPart: `/san-infrastructure/top-talkers`, name: 'Top Talkers Analysis'},
+  ];
   private defaultDataCenter: number;
 
   static convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {

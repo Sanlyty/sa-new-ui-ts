@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: './global-statistics/global-statistics.module#GlobalStatisticsModule',
   },
   {
+    path: 'san-infrastructure',
+    loadChildren: './san-infrastructure/san-infrastructure.module#SanInfrastructureModule',
+  },
+  {
     path: '', component: DashboardComponent, data: {
       breadcrumb: 'Dashboard'
     }

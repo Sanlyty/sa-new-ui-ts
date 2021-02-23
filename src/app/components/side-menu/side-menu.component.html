@@ -32,7 +32,17 @@
             ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
           </ul>
         </li>
-
+        <li class="treeview">
+          <a href="#"><i class="fa fa-chart-area"></i><span>SAN infrastructure</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li *ngFor="let globalLink of sanInfraLinks"
+            ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
     <div class="central-part-menu">
