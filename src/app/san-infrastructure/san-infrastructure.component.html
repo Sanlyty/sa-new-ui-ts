@@ -1,0 +1,27 @@
+
+
+<h2>{{getTitle()}}</h2>
+<div class="col-md-12">
+  <h3>{{getTabTitle()}}</h3>
+</div>
+<div class="col-md-12">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li *ngFor="let dataCenter of dataCenters"
+          [class.active]="isCurrentTab(dataCenter.id)">
+        <a (click)="activeTab(dataCenter.id)"
+           [routerLink]="['./' + context, dataCenter.id]">
+          {{dataCenter.label}}
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.performance-statistics-content -->
+  </div>
+  <!-- /.nav-tabs-custom -->
+</div>
+
+
+
