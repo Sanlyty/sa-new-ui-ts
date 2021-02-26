@@ -9,6 +9,7 @@ import {SideMenuComponent} from './components/side-menu/side-menu.component';
 import {IframeComponent} from './components/iframe/iframe.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {GlobalStatisticsModule} from './global-statistics/global-statistics.module';
+import {SanInfrastructureModule} from './san-infrastructure/san-infrastructure.module';
 import {SaCommonModule} from './common/sa-common.module';
 import {SystemPool2SasiGroupTablePipe} from './common/utils/system-pool-2-sasi-group-table.pipe';
 import {NgApexchartsModule} from 'ng-apexcharts';
@@ -44,6 +45,7 @@ export const httpInterceptorProviders = [
   ],
   imports: [
     GlobalStatisticsModule,
+    SanInfrastructureModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

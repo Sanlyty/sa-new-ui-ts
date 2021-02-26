@@ -10,8 +10,8 @@ const tabTitles = {
 
 @Component({
   selector: 'app-san-infrastructure',
-  templateUrl: './app-san-infrastructure.component.html',
-  styleUrls: ['./app-san-infrastructure.component.css'],
+  templateUrl: './san-infrastructure.component.html',
+  styleUrls: ['./san-infrastructure.component.css'],
 })
 export class SanInfrastructureComponent implements OnInit {
 

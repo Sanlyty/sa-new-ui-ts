@@ -18,7 +18,7 @@
   height: 400px;
 }
 
-app-iframe {
+app-iframe, app-top-talkers {
   min-height: inherit;
 }
 

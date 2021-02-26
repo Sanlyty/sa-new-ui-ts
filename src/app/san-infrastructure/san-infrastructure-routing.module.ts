@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
+import { TopTalkersComponent } from './views/top-talkers/top-talkers.component';
 
 const routes: Routes = [
   {
     path: 'san-infrastructure/top-talkers',
-    component: BlockSizeLatencyComponent,
+    component: TopTalkersComponent,
     data: {
       breadcrumb: 'SAN Infrastructure'
     }
