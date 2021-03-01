@@ -18,15 +18,7 @@
   height: 400px;
 }
 
-app-iframe, app-top-talkers {
-  min-height: inherit;
-}
-
 section.container-fluid {
-  min-height: inherit;
-}
-
-#form-iframe {
   min-height: inherit;
 }
 
