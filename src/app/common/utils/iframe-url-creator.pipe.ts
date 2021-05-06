@@ -39,17 +39,23 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     this.mapSystemToDirectory['XP7_B16_11114'] = '26';
     this.mapSystemToDirectory['XP7_B17_50225'] = '27';
     this.mapSystemToDirectory['XP8_B22_30754'] = '32';
+    this.mapSystemToDirectory['XP8_B24_31139'] = '34';
+    this.mapSystemToDirectory['XP8_B25_31148'] = '35';
+
     this.mapSystemToDirectory['XP7_CBJ2_57216'] = '41';
     this.mapSystemToDirectory['XP7_CBJ3_57222'] = '42';
     this.mapSystemToDirectory['XP7_CBJ4_20575'] = '43';
     this.mapSystemToDirectory['XP7_CBJ5_56053'] = '44';
     this.mapSystemToDirectory['XP8_CBJ22_33364'] = '46';
     this.mapSystemToDirectory['XP8_CBJ23_33363'] = '47';
+
     this.mapSystemToDirectory['XP7_QAS1_20610'] = '51';
     this.mapSystemToDirectory['XP7_QAS2_56139'] = '52';
     // this.mapToDirectory[13] = '';
     this.mapSystemToDirectory['XP7_STL2_10558'] = '62';
     this.mapSystemToDirectory['XP7_STL3_58634'] = '63';
+    this.mapSystemToDirectory['XP8_STL21_31154'] = '64';
+    this.mapSystemToDirectory['XP8_STL22_31153'] = '65';
     // this.mapSystemToDirectory[22] = '71';
     this.mapSystemToDirectory['XP7_MEG2_20725'] = '72';
     this.mapSystemToDirectory['XP7_AIMS1_20627'] = '81';
