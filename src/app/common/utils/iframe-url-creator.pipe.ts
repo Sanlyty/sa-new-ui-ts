@@ -60,6 +60,9 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     // this.mapSystemToDirectory[22] = '71';
     this.mapSystemToDirectory['XP7_MEG2_20725'] = '72';
     this.mapSystemToDirectory['XP7_AIMS1_20627'] = '81';
+
+    this.mapSystemToDirectory['XP8_LEJXPHUB_31258'] = '85';
+    this.mapSystemToDirectory['XP8_LEJXPEAT_31267'] = '86';
   }
 
   transform(value: any, args: any): any {
