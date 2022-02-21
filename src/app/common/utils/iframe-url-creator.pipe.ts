@@ -31,6 +31,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     this.mapSystemToDirectory['XP8_G23_30739'] = '13';
     this.mapSystemToDirectory['XP8_G24_31152'] = '14';
     this.mapSystemToDirectory['XP8_G25_31149'] = '15';
+    this.mapSystemToDirectory['XP8_G26_40137'] = '16';
     // this.mapToDirectory[7] = '';
     this.mapSystemToDirectory['XP7_B12_58678'] = '22';
     this.mapSystemToDirectory['XP7_B13_59006'] = '23';
@@ -41,6 +42,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     this.mapSystemToDirectory['XP8_B22_30754'] = '32';
     this.mapSystemToDirectory['XP8_B24_31139'] = '34';
     this.mapSystemToDirectory['XP8_B25_31148'] = '35';
+    this.mapSystemToDirectory['XP8_B26_40139'] = '36';
 
     this.mapSystemToDirectory['XP7_CBJ2_57216'] = '41';
     this.mapSystemToDirectory['XP7_CBJ3_57222'] = '42';
