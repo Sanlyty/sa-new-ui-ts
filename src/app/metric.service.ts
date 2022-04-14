@@ -1,26 +1,26 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {InfrastructureDto} from './common/models/dtos/infrastructure.dto';
-import {environment} from '../environments/environment';
-import {DatePipe} from '@angular/common';
-import {SystemMetricType} from './common/models/metrics/system-metric-type.enum';
-import {GraphDataDto} from './common/models/dtos/graph-data.dto';
-import {OperationType} from './common/models/metrics/operation-type.enum';
-import {SystemPool} from './common/models/system-pool.vo';
-import {StorageEntityResponseDto} from './common/models/dtos/storage-entity-response.dto';
-import {StorageEntityMetricDto} from './common/models/dtos/storage-entity-metric.dto';
-import {StorageEntityRequestDto} from './common/models/dtos/storage-entity-request.dto';
-import {StorageEntityDetailRequestDto} from './common/models/dtos/storage-entity-detail-request.dto';
-import {ChangeStatusRequestDto} from './common/models/dtos/change-status-request.dto';
-import {StorageEntityType} from './common/models/dtos/owner.dto';
-import {DuplicateStorageEntityDto} from './common/models/dtos/duplicate-storage-entity.dto';
-import {ComponentStatus} from './common/models/dtos/enums/component.status';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { InfrastructureDto } from "./common/models/dtos/infrastructure.dto";
+import { environment } from "../environments/environment";
+import { DatePipe } from "@angular/common";
+import { SystemMetricType } from "./common/models/metrics/system-metric-type.enum";
+import { GraphDataDto } from "./common/models/dtos/graph-data.dto";
+import { OperationType } from "./common/models/metrics/operation-type.enum";
+import { SystemPool } from "./common/models/system-pool.vo";
+import { StorageEntityResponseDto } from "./common/models/dtos/storage-entity-response.dto";
+import { StorageEntityMetricDto } from "./common/models/dtos/storage-entity-metric.dto";
+import { StorageEntityRequestDto } from "./common/models/dtos/storage-entity-request.dto";
+import { StorageEntityDetailRequestDto } from "./common/models/dtos/storage-entity-detail-request.dto";
+import { ChangeStatusRequestDto } from "./common/models/dtos/change-status-request.dto";
+import { StorageEntityType } from "./common/models/dtos/owner.dto";
+import { DuplicateStorageEntityDto } from "./common/models/dtos/duplicate-storage-entity.dto";
+import { ComponentStatus } from "./common/models/dtos/enums/component.status";
 
 export enum PeriodType {
-  DAY = 'DAY',
-  WEEK = 'WEEK',
-  MONTH = 'MONTH'
+  DAY = "DAY",
+  WEEK = "WEEK",
+  MONTH = "MONTH",
 }
 
 export interface LatencyFilter {
@@ -48,10 +48,9 @@ export interface ThreeDimensionValue {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MetricService {
-
   constructor(private http: HttpClient) {
     this.getDataCenters();
   }
@@ -66,7 +65,10 @@ export class MetricService {
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/alerts');
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v1/infrastructure/alerts"
+    );
     return this.http.get<InfrastructureDto>(url);
   }
 
@@ -74,32 +76,45 @@ export class MetricService {
     if (this.dataCenterObservable !== null) {
       return this.dataCenterObservable;
     }
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters');
+    const url = this.buildUrl(environment.metricsBaseUrl, "/v1/datacenters");
     this.dataCenterObservable = this.http.get<StorageEntityResponseDto[]>(url);
-    this.dataCenterObservable.subscribe(
-      dto => this.infrastructure = dto
-    );
+    this.dataCenterObservable.subscribe((dto) => (this.infrastructure = dto));
     return this.dataCenterObservable;
   }
 
   public getSystemName(datacenterId: number, systemId: number): string {
-    const datacenterObj = this.infrastructure.find(datacenter => datacenter.storageEntity.id === datacenterId);
+    const datacenterObj = this.infrastructure.find(
+      (datacenter) => datacenter.storageEntity.id === datacenterId
+    );
     if (datacenterObj === undefined) {
-      return '';
+      return "";
     }
-    const systemObj = datacenterObj.storageEntity.children.find(system => system.id === systemId);
+    const systemObj = datacenterObj.storageEntity.children.find(
+      (system) => system.id === systemId
+    );
     if (systemObj === undefined) {
-      return '';
+      return "";
     }
     return systemObj.name;
   }
 
-  getPerformanceStatistics(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
+  getPerformanceStatistics(
+    id: number,
+    period: PeriodType
+  ): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance', period);
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/" + id + "/performance",
+        period
+      );
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/performance', period);
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/performance",
+        period
+      );
     }
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
@@ -107,153 +122,247 @@ export class MetricService {
   getCapacityStatistics(id: number): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/" + id + "/capacity"
+      );
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/capacity');
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/capacity"
+      );
     }
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getDpSlaStatistics(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
+  getDpSlaStatistics(
+    id: number,
+    period: PeriodType
+  ): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla', period);
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/" + id + "/sla",
+        period
+      );
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/sla', period);
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/sla",
+        period
+      );
     }
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getAdaptersStatistics(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
+  getAdaptersStatistics(
+    id: number,
+    period: PeriodType
+  ): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters', period);
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/" + id + "/adapters",
+        period
+      );
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/adapters', period);
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/adapters",
+        period
+      );
     }
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
   getGlobalCapacityStatistics(): Observable<StorageEntityMetricDto[]> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity');
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v1/infrastructure/capacity"
+    );
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
   getGlobalHostGroupCapacityStatistics(): Observable<StorageEntityMetricDto[]> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/host-group-capacity');
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v1/infrastructure/host-group-capacity"
+    );
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getHostGroupCapacityStatistics(id: number): Observable<StorageEntityMetricDto[]> {
+  getHostGroupCapacityStatistics(
+    id: number
+  ): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/host-groups');
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/" + id + "/host-groups"
+      );
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/host-groups');
+      url = this.buildUrl(
+        environment.metricsBaseUrl,
+        "/v1/datacenters/host-groups"
+      );
     }
     return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
   getGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {
-    let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/performance/graph');
-    url = url + this.convertTypeToUrlParams('types', types);
+    let url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v1/infrastructure/performance/graph"
+    );
+    url = url + this.convertTypeToUrlParams("types", types);
     return this.http.get<GraphDataDto>(url);
   }
 
   getCapacityGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {
-    let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity/graph');
-    url = url + this.convertTypeToUrlParams('types', types);
+    let url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v1/infrastructure/capacity/graph"
+    );
+    url = url + this.convertTypeToUrlParams("types", types);
     return this.http.get<GraphDataDto>(url);
   }
 
-  getLatencyData(poolIdsIn: number[], datesIn: string[], operationTypes: string[], blockSizes: number[], latencies: number[]) {
+  getLatencyData(
+    poolIdsIn: number[],
+    datesIn: string[],
+    operationTypes: string[],
+    blockSizes: number[],
+    latencies: number[]
+  ) {
     const request: LatencyFilter = {
       operations: operationTypes,
       dates: datesIn,
       poolIds: poolIdsIn,
       latencies: latencies,
-      blockSizes: blockSizes
+      blockSizes: blockSizes,
     };
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/data');
-    const headersParams = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post<OperationData[]>(url, request, {headers: headersParams});
+    const url = this.buildUrl(environment.metricsBaseUrl, "/v1/latency/data");
+    const headersParams = new HttpHeaders({
+      "Content-Type": "application/json",
+    });
+    return this.http.post<OperationData[]>(url, request, {
+      headers: headersParams,
+    });
   }
 
-  getStorageEntityDetail(entityType: StorageEntityType = StorageEntityType.SYSTEM, id: number = null, paramStatus: ComponentStatus[] = [ComponentStatus.ACTIVE]) {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
-    const callParams: { type, systemId?, status: string[] } = {type: StorageEntityType[entityType], status: paramStatus.map(statusItem => ComponentStatus[statusItem])};
+  getStorageEntityDetail(
+    entityType: StorageEntityType = StorageEntityType.SYSTEM,
+    id: number = null,
+    paramStatus: ComponentStatus[] = [ComponentStatus.ACTIVE]
+  ) {
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v2/storage-entities"
+    );
+    const callParams: { type; systemId?; status: string[] } = {
+      type: StorageEntityType[entityType],
+      status: paramStatus.map((statusItem) => ComponentStatus[statusItem]),
+    };
     if (id !== null) {
       callParams.systemId = id.toString();
     }
     return this.http.get<StorageEntityResponseDto[]>(url, {
-      params: callParams
+      params: callParams,
     });
   }
 
   getLatencyMetadata() {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/metadata');
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v1/latency/metadata"
+    );
     return this.http.get<LatencyMetadata>(url);
   }
 
-  getParityGroupEvents(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
+  getParityGroupEvents(
+    id: number,
+    period: PeriodType
+  ): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = environment.metricsBaseUrl + '/v1/datacenters/' + id + '/parity-groups/events';
+      url =
+        environment.metricsBaseUrl +
+        "/v1/datacenters/" +
+        id +
+        "/parity-groups-events";
     } else {
-      url = environment.metricsBaseUrl + '/v1/datacenters/parity-groups/events';
+      url = environment.metricsBaseUrl + "/v1/datacenters/parity-groups-events";
     }
     const toDate = new Date().getTime();
     const fromDate = this.calculateDateByPeriodType(new Date(), period);
     const httpParams = new HttpParams()
-      .append('toDate', toDate.toString())
-      .append('fromDate', fromDate.toString());
-    return this.http.get<StorageEntityMetricDto[]>(url, {params: httpParams});
+      .append("toDate", toDate.toString())
+      .append("fromDate", fromDate.toString());
+    return this.http.get<StorageEntityMetricDto[]>(url, { params: httpParams });
   }
 
   createStorageEntity(dto: StorageEntityRequestDto) {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      "/v2/storage-entities"
+    );
     return this.http.post<StorageEntityResponseDto>(url, dto);
   }
 
   updateStorageEntity(id: number, dto: StorageEntityDetailRequestDto) {
-    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id;
+    const url = environment.metricsBaseUrl + "/v2/storage-entities/" + id;
     return this.http.put<StorageEntityResponseDto>(url, dto);
   }
 
   moveStorageEntity(id: number, parentId: number) {
-    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id + '/new-parent/' + parentId;
+    const url =
+      environment.metricsBaseUrl +
+      "/v2/storage-entities/" +
+      id +
+      "/new-parent/" +
+      parentId;
     return this.http.put<any>(url, null);
   }
 
   private buildUrl(baseUrl, basePath, period?) {
-    let periodParam = '';
+    let periodParam = "";
     if (period != null) {
-      periodParam = 'period=' + period + '&';
+      periodParam = "period=" + period + "&";
     }
-    return baseUrl + basePath + '?' + periodParam + 't=' + MetricService.generateSaltValue() + '&date=' + this.generateDate();
-  }
-
-  private generateDate(): string {
-    const pipe = new DatePipe('en-US');
-    return pipe.transform(this.currentDate, 'yyyy-MM-dd');
-  }
-
-  private convertTypeToUrlParams(paramName: string, types: SystemMetricType[]) {
-    const paramNameUrl = '&' + paramName + '[]=';
-    return types.reduce(
-      (previous, current) => {
-        return previous + paramNameUrl + current;
-      }, ''
+    return (
+      baseUrl +
+      basePath +
+      "?" +
+      periodParam +
+      "t=" +
+      MetricService.generateSaltValue() +
+      "&date=" +
+      this.generateDate()
     );
   }
 
+  private generateDate(): string {
+    const pipe = new DatePipe("en-US");
+    return pipe.transform(this.currentDate, "yyyy-MM-dd");
+  }
+
+  private convertTypeToUrlParams(paramName: string, types: SystemMetricType[]) {
+    const paramNameUrl = "&" + paramName + "[]=";
+    return types.reduce((previous, current) => {
+      return previous + paramNameUrl + current;
+    }, "");
+  }
+
   deleteStorageEntity(id: number) {
-    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id;
+    const url = environment.metricsBaseUrl + "/v2/storage-entities/" + id;
     return this.http.delete<any>(url);
   }
 
   updateStatus(id: number, dto: ChangeStatusRequestDto) {
-    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id + '/status';
+    const url =
+      environment.metricsBaseUrl + "/v2/storage-entities/" + id + "/status";
     return this.http.put<any>(url, dto);
   }
 
@@ -276,11 +385,17 @@ export class MetricService {
   }
 
   calculateDate(date: Date, days: number) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() - (days * this.DAY_IN_MILISECONDS);
+    return (
+      new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() -
+      days * this.DAY_IN_MILISECONDS
+    );
   }
 
   duplicateStorageEntity(request: DuplicateStorageEntityDto, id: number) {
-    const url = this.buildUrl(environment.metricsBaseUrl, `/v2/storage-entities/${id}/duplicate`);
+    const url = this.buildUrl(
+      environment.metricsBaseUrl,
+      `/v2/storage-entities/${id}/duplicate`
+    );
     return this.http.post<StorageEntityResponseDto>(url, request);
   }
 
