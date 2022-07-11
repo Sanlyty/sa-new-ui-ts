@@ -53,6 +53,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
 
     this.mapSystemToDirectory["XP7_QAS1_20610"] = "51";
     this.mapSystemToDirectory["XP7_QAS2_56139"] = "52";
+    this.mapSystemToDirectory["XP8_QAS22_40268"] = "53";
     // this.mapToDirectory[13] = '';
     this.mapSystemToDirectory["XP7_STL2_10558"] = "62";
     this.mapSystemToDirectory["XP7_STL3_58634"] = "63";
