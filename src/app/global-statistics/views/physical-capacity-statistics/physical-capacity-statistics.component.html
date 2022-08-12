@@ -1,5 +1,6 @@
 <div class="tab-pane" *ngIf="data.length > 0">
   <div class="container-fluid">
+    <app-tier-select (onSelect)="selectTier($event)"></app-tier-select>
     <div class="row">
       <app-sasi-table class="table-right" [data]="data | systemPool2SasiGroupTable: 'capacityAnalysis'"
                       [tableOptions]="options"></app-sasi-table>

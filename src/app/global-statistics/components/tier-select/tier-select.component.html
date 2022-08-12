@@ -1,0 +1,5 @@
+<ul class="tier-select">
+    <li *ngFor="let i of createRange(5);">
+        <button [attr.data-tier]="i" (click)="onClick($event)">T{{i}}</button>
+    </li>
+</ul>
