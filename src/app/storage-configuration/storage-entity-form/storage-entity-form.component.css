@@ -5,3 +5,9 @@
   color: rgba(94,0,3,0.75);
   padding-top: 8px;
 }
+
+.form-checkbox {
+  display: block;
+  width: 32px;
+  height: 32px;
+}

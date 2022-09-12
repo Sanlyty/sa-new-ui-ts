@@ -21,6 +21,6 @@ export class CheckmarkComponent implements OnInit {
   ngOnInit() {}
 
   isActive(): boolean | undefined {
-    return this.rowData.getCellValue(this.rowData.cells[this.column.index]);
+    return (this.data.value as any) ?? undefined;
   }
 }

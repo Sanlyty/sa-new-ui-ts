@@ -124,11 +124,11 @@
                 <span *ngIf="covers.invalid && covers.errors.maxlength !== null" class="help-block">Covers the room too long</span>
               </div>
             </div>
-            <div *ngIf="automation !== null && false">
+            <div *ngIf="automation !== null">
               <div class="col-md-12 form-group"
                    [class.has-error]="automation.invalid && (automation.dirty || automation.touched || submitted)">
                 <label for="automation">Automation: </label>
-                <input id="automation" class="form-control" type="checkbox" formControlName="automation">
+                <input id="automation" type="checkbox" class="form-checkbox" formControlName="automation">
               </div>
             </div>
             <div *ngIf="wwn !== null">
