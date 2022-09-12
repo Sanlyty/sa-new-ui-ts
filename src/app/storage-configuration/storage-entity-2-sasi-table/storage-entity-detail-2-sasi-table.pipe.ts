@@ -73,6 +73,9 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
         row.cells["automation"] = new SasiCell(detail.automation, {
           value: detail.automation,
         });
+        row.cells["throughput"] = new SasiCell(detail.throughput, {
+          value: detail.throughput,
+        });
         row.cells["wwn"] = new SasiCell(detail.wwn, { value: detail.wwn });
       }
       return row;

@@ -15,5 +15,6 @@ export class StorageEntityDetailRequestDto {
   slot: string;
   covers?: string;
   automation?: boolean;
+  throughput?: number;
   wwn: string;
 }

@@ -59,6 +59,7 @@ export class SeTextFormatterComponent implements OnInit {
       formData.slot = this.getCellValue("slot");
       formData.covers = this.getCellValue("covers");
       formData.automation = this.getCellValue("automation");
+      formData.throughput = this.getCellValue("throughput");
       formData.wwn = this.getCellValue("wwn");
     }
     this.formBus.sendFormData({ data: formData, selectedData: [] });

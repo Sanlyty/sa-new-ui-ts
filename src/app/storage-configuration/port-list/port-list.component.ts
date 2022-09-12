@@ -9,6 +9,7 @@ import { SimpleSortImpl } from "../../common/components/sasi-table/simple-sort-i
 import { StorageEntityList } from "../channel-board-list/channel-board-list.component";
 import { SpeedFormatterComponent } from "../speed-formatter/speed-formatter.component";
 import { StorageEntityStatusComponent } from "../storage-entity-status/storage-entity-status.component";
+import { CheckmarkComponent } from "../checkmark/checkmark.component";
 
 @Component({
   selector: "app-port-list",
@@ -31,7 +32,7 @@ export class PortListComponent extends StorageEntityList {
       ["cables", "Cables", undefined],
       ["switch", "Switch", undefined],
       ["covers", "Covers the room", undefined],
-      ["automation", "Automation", undefined],
+      ["automation", "Automation", CheckmarkComponent],
       ["throughput", "Throughput", SpeedFormatterComponent],
       ["slot", "Slot/Port", undefined],
       ["note", "Description", undefined],
