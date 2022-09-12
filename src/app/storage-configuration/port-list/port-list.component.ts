@@ -30,7 +30,7 @@ export class PortListComponent extends StorageEntityList {
       ["speed", "Speed", SpeedFormatterComponent],
       ["cables", "Cables", undefined],
       ["switch", "Switch", undefined],
-      ["coversRoom", "Covers the room", undefined],
+      ["covers", "Covers the room", undefined],
       ["automation", "Automation", undefined],
       ["throughput", "Throughput", SpeedFormatterComponent],
       ["slot", "Slot/Port", undefined],

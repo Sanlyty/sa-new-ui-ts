@@ -116,6 +116,21 @@
                 <span *ngIf="slot.invalid && slot.errors.maxlength !== null" class="help-block">Slot too long</span>
               </div>
             </div>
+            <div *ngIf="covers !== null">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="covers.invalid && (covers.dirty || covers.touched || submitted)">
+                <label for="covers">Covers the room: </label>
+                <input id="covers" class="form-control" type="text" formControlName="covers">
+                <span *ngIf="covers.invalid && covers.errors.maxlength !== null" class="help-block">Covers the room too long</span>
+              </div>
+            </div>
+            <div *ngIf="automation !== null && false">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="automation.invalid && (automation.dirty || automation.touched || submitted)">
+                <label for="automation">Automation: </label>
+                <input id="automation" class="form-control" type="checkbox" formControlName="automation">
+              </div>
+            </div>
             <div *ngIf="wwn !== null">
               <div class="col-md-12 form-group"
                    [class.has-error]="wwn.invalid && (wwn.dirty || wwn.touched || submitted)">

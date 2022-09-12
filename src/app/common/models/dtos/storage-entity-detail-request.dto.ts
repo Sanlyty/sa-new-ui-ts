@@ -13,5 +13,7 @@ export class StorageEntityDetailRequestDto {
   cables: string;
   switch: string;
   slot: string;
+  covers?: string;
+  automation?: boolean;
   wwn: string;
 }
