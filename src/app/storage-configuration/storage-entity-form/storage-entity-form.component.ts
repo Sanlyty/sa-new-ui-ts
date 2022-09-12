@@ -231,6 +231,8 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
           cables: new FormControl(this.data.cables, [Validators.maxLength(50)]),
           wwn: new FormControl(this.data.wwn, [Validators.maxLength(100)]),
           slot: new FormControl(this.data.slot, [Validators.maxLength(30)]),
+          covers: new FormControl(this.data.covers, [Validators.maxLength(64)]),
+          automation: new FormControl(this.data.automation),
           switch: new FormControl(this.data.switch, [Validators.maxLength(30)]),
           forceAsNew: new FormControl(this.forceAsNew),
         });
