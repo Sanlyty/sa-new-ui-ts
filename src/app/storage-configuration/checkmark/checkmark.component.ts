@@ -21,6 +21,6 @@ export class CheckmarkComponent implements OnInit {
   ngOnInit() {}
 
   isActive(): boolean | undefined {
-    return (this.data.value as any) ?? undefined;
+    return (this.data?.value as any) ?? undefined;
   }
 }
