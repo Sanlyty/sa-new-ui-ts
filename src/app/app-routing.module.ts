@@ -1,45 +1,57 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {IframeComponent} from './components/iframe/iframe.component';
-import {DashboardComponent} from './components/dashboard/dashboard.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { IframeComponent } from "./components/iframe/iframe.component";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { SaOverviewComponent } from "./overview/sa-overview.component";
 
 const routes: Routes = [
-
   {
-    path: 'dashboard', component: DashboardComponent,
+    path: "dashboard",
+    component: DashboardComponent,
     data: {
-      breadcrumb: 'Dashboard'
+      breadcrumb: "Dashboard",
     },
   },
-  {path: 'iframe/:url', component: IframeComponent},
+  { path: "iframe/:url", component: IframeComponent },
   {
-    path: 'storage-config',
-    loadChildren: './storage-configuration/storage-configuration.module#StorageConfigurationModule',
+    path: "overview/:system/:view",
+    component: SaOverviewComponent,
     data: {
-      breadcrumb: 'Storage Configuration'
-    }
+      breadcrumb: "Overview",
+    },
   },
   {
-    path: 'global-statistics',
-    loadChildren: './global-statistics/global-statistics.module#GlobalStatisticsModule',
+    path: "storage-config",
+    loadChildren:
+      "./storage-configuration/storage-configuration.module#StorageConfigurationModule",
+    data: {
+      breadcrumb: "Storage Configuration",
+    },
   },
   {
-    path: 'san-infrastructure',
-    loadChildren: './san-infrastructure/san-infrastructure.module#SanInfrastructureModule',
+    path: "global-statistics",
+    loadChildren:
+      "./global-statistics/global-statistics.module#GlobalStatisticsModule",
   },
   {
-    path: '', component: DashboardComponent, data: {
-      breadcrumb: 'Dashboard'
-    }
+    path: "san-infrastructure",
+    loadChildren:
+      "./san-infrastructure/san-infrastructure.module#SanInfrastructureModule",
+  },
+  {
+    path: "",
+    component: DashboardComponent,
+    data: {
+      breadcrumb: "Dashboard",
+    },
   },
 ];
 
 @NgModule({
   imports: [
     // RouterModule.forRoot(routes, { enableTracing: true }) // debugging
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

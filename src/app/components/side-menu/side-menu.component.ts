@@ -1,55 +1,61 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuTree} from '../../common/models/menu-tree.vo';
-import {MetricService} from '../../metric.service';
-import {MenuItem} from '../../common/models/menu-item.vo';
-import {StorageEntityResponseDto} from '../../common/models/dtos/storage-entity-response.dto';
-import {SortStorageEntity} from '../../common/utils/sort-storage-entity';
+import { Component, OnInit } from "@angular/core";
+import { MenuTree } from "../../common/models/menu-tree.vo";
+import { MetricService } from "../../metric.service";
+import { MenuItem } from "../../common/models/menu-item.vo";
+import { StorageEntityResponseDto } from "../../common/models/dtos/storage-entity-response.dto";
+import { SortStorageEntity } from "../../common/utils/sort-storage-entity";
 
 @Component({
-  selector: 'app-side-menu',
-  templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.css']
+  selector: "app-side-menu",
+  templateUrl: "./side-menu.component.html",
+  styleUrls: ["./side-menu.component.css"],
 })
 export class SideMenuComponent implements OnInit {
-
   constructor(private metricService: MetricService) {
+    this.poolMetricLinks = this.poolMetricLinks.flatMap((link) => [
+      { ...link, raw: true },
+      { ...link, name: link.name + "(Old)" },
+    ]);
   }
 
   items: MenuTree[];
   filteredItems: MenuTree[];
   searchExpression: string;
   poolMetricLinks = [
-    {id: 1, linkPart: 'dashboard', name: 'Dashboard'},
-    {id: 2, linkPart: 'serverBoard', name: 'Server board'},
-    {id: 3, linkPart: 'dpSla', name: 'DP Pool Board and SLA'},
-    {id: 4, linkPart: 'deepAnalysis', name: 'Deep Analysis'},
-    {id: 5, linkPart: 'cache', name: 'Cache Board'},
-    {id: 6, linkPart: 'adapters', name: 'CHA Adapters Board'},
-    {id: 7, linkPart: 'trends', name: 'Trends'},
-    {id: 8, linkPart: 'capacityAnalysis', name: 'Capacity Analysis'}
+    { linkPart: "dashboard", name: "Dashboard" },
+    { linkPart: "serverBoard", name: "Server board" },
+    { linkPart: "dpSla", name: "DP Pool Board and SLA" },
+    { linkPart: "deepAnalysis", name: "Deep Analysis" },
+    { linkPart: "cache", name: "Cache Board" },
+    { linkPart: "adapters", name: "CHA Adapters Board" },
+    { linkPart: "trends", name: "Trends" },
+    { linkPart: "capacityAnalysis", name: "Capacity Analysis" },
   ];
   globalStatisticsLinks = [];
   storageConfigurationLinks = [];
   sanInfraLinks = [
-    {id: 1, linkPart: `/san-infrastructure/top-talkers`, name: 'Top Talkers Analysis'},
+    {
+      id: 1,
+      linkPart: `/san-infrastructure/top-talkers`,
+      name: "Top Talkers Analysis",
+    },
   ];
   private defaultDataCenter: number;
 
   static convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {
-    const menu: MenuTree[] = [];
-    const sortedData = SortStorageEntity.sort(data);
-    for (const dataCenter of sortedData) {
-      const items: MenuItem[] = [];
-      for (const system of dataCenter.storageEntity.children) {
-        items.push(new MenuItem(system.id, system.name));
-      }
-      menu.push(new MenuTree(dataCenter.storageEntity.name, items));
-    }
-    return menu;
+    return SortStorageEntity.sort(data).map(
+      (dataCenter) =>
+        new MenuTree(
+          dataCenter.storageEntity.name,
+          dataCenter.storageEntity.children.map(
+            (system) => new MenuItem(system.id, system.name)
+          )
+        )
+    );
   }
 
   ngOnInit() {
-    this.metricService.getDataCenters().subscribe(data => {
+    this.metricService.getDataCenters().subscribe((data) => {
       this.items = SideMenuComponent.convertMenu(data);
       this.setDefaultDataCenter(data);
       this.filteredItems = this.items;
@@ -66,26 +72,55 @@ export class SideMenuComponent implements OnInit {
 
   private setGlobalStatisticsLinks() {
     this.globalStatisticsLinks = [
-      {id: 1, linkPart: `/global-statistics/performance`, name: 'Performance Statistics'},
-      {id: 2, linkPart: `/global-statistics/physical-capacity`, name: 'Physical Capacity'},
-      {id: 3, linkPart: `/global-statistics/logical-capacity`, name: 'Logical Capacity'},
-      {id: 4, linkPart: `/global-statistics/dp-sla`, name: 'SLA Events'},
-      {id: 5, linkPart: `/global-statistics/adapters`, name: 'CHA&Port Imbalances'},
-      {id: 6, linkPart: `/global-statistics/host-group-capacity`, name: 'VMware Capacity'},
-      {id: 7, linkPart: `/global-statistics/latency`, name: 'Latency Analysis'},
-      {id: 8, linkPart: `/global-statistics/parity-group-events`, name: 'Parity Group Events'},
+      {
+        linkPart: `/global-statistics/performance`,
+        name: "Performance Statistics",
+      },
+      {
+        linkPart: `/global-statistics/physical-capacity`,
+        name: "Physical Capacity",
+      },
+      {
+        linkPart: `/global-statistics/logical-capacity`,
+        name: "Logical Capacity",
+      },
+      { linkPart: `/global-statistics/dp-sla`, name: "SLA Events" },
+      {
+        linkPart: `/global-statistics/adapters`,
+        name: "CHA&Port Imbalances",
+      },
+      {
+        linkPart: `/global-statistics/host-group-capacity`,
+        name: "VMware Capacity",
+      },
+      {
+        linkPart: `/global-statistics/latency`,
+        name: "Latency Analysis",
+      },
+      {
+        linkPart: `/global-statistics/parity-group-events`,
+        name: "Parity Group Events",
+      },
     ];
   }
 
   private setSystemConfigurationLinks() {
     this.storageConfigurationLinks = [
-      {id: 1, linkPart: `/storage-config/locations`, name: 'Systems by locations'},
-      {id: 2, linkPart: `/storage-config/port-connectivity`, name: 'Port connectivity'},
+      {
+        id: 1,
+        linkPart: `/storage-config/locations`,
+        name: "Systems by locations",
+      },
+      {
+        id: 2,
+        linkPart: `/storage-config/port-connectivity`,
+        name: "Port connectivity",
+      },
     ];
   }
 
   search(): void {
-    if (this.searchExpression === '') {
+    if (this.searchExpression === "") {
       this.filteredItems = this.items;
       return;
     }
@@ -107,4 +142,3 @@ export class SideMenuComponent implements OnInit {
     }
   }
 }
-
