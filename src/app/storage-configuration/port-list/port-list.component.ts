@@ -25,28 +25,40 @@ export class PortListComponent extends StorageEntityList {
   }
 
   ngOnInit() {
-    const cols: [string, string, Type<any> | undefined][] = [
-      ["parentName", "Channel Board", undefined],
-      ["name", "Name", undefined],
+    // Index, Label, Formatter?, ColumnTooltip?
+    const cols: [string, string, Type<any>?, string?][] = [
+      ["parentName", "Channel Board"],
+      ["name", "Name"],
       ["speed", "Speed", SpeedFormatterComponent],
-      ["cables", "Cables", undefined],
-      ["switch", "Switch", undefined],
-      ["covers", "Covers the room", undefined],
-      ["automation", "Automation", CheckmarkComponent],
-      ["throughput", "Throughput", SpeedFormatterComponent],
-      ["slot", "Slot/Port", undefined],
-      ["note", "Description", undefined],
-      ["wwn", "WWN", undefined],
+      ["cables", "Cables"],
+      ["switch", "Switch"],
+      ["covers", "Covers the room"],
+      [
+        "automation",
+        "Automation",
+        CheckmarkComponent,
+        "Define if FE port is available for automation",
+      ],
+      [
+        "throughput",
+        "Throughput",
+        SpeedFormatterComponent,
+        "Weekly Average Throughput for particular FE port",
+      ],
+      ["slot", "Slot/Port"],
+      ["note", "Description"],
+      ["wwn", "WWN"],
       ["status", "Active", StorageEntityStatusComponent],
     ];
 
-    for (const [idx, label, formatter] of cols) {
+    for (const [idx, label, formatter, tt] of cols) {
       this.options.columns.push(
         SasiColumnBuilder.getInstance()
           .withIndex(idx)
           .withLabel(label)
           .withAltLabel(label)
           .withComponent(formatter ?? SeTextFormatterComponent)
+          .withColumnTooltipText(tt ?? label)
           .build()
       );
     }
