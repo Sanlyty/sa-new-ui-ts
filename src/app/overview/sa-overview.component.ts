@@ -6,6 +6,14 @@ import {
   ViewChild,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { OverviewView } from "sa-overview-svelte";
+
+const viewMap = {
+  dashboard: "dashBoard",
+  cache: "cacheBoard",
+  channel: "channelBoard",
+  trends: "trendsBoard",
+};
 
 @Component({
   selector: "app-sa-overview",
@@ -22,16 +30,33 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     route.paramMap.subscribe((map) => {
       this.system = map.get("system");
       this.view = map.get("view");
+
+      if (this.overviewInstance) {
+        this.ngOnInit();
+      }
     });
   }
 
+  private overviewInstance: typeof OverviewView;
   ngOnInit(): void {
     // Create Svelte component
-    // TODO:
-    console.log(this.rootElement.nativeElement);
+    if (this.overviewInstance) {
+      this.overviewInstance.$destroy();
+    }
+
+    this.overviewInstance = new OverviewView({
+      target: this.rootElement.nativeElement,
+      props: {
+        system: this.system,
+        params: {
+          board: viewMap[this.view] ?? "dashBoard",
+        },
+      },
+    });
   }
 
   ngOnDestroy(): void {
     // Dispose Svelte component
+    this.overviewInstance?.$destroy();
   }
 }

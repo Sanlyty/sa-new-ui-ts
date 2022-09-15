@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -33,6 +33,7 @@
     "ngx-spinner": "^10.0.1",
     "ngx-store-9": "^9.0.1",
     "rxjs": "~6.6.2",
+    "sa-overview-svelte": "file:../sa-overview-svelte",
     "tslib": "1.10.0",
     "zone.js": "~0.10.3"
   },
