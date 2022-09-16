@@ -7,6 +7,8 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { OverviewView } from "sa-overview-svelte";
+import { PeriodType } from "../metric.service";
+import { PeriodService } from "../period.service";
 
 const viewMap = {
   dashboard: "dashBoard",
@@ -26,20 +28,34 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
 
   @ViewChild("root", { static: true }) rootElement: ElementRef;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    protected periodService: PeriodService
+  ) {
     route.paramMap.subscribe((map) => {
       this.system = map.get("system");
       this.view = map.get("view");
 
       if (this.overviewInstance) {
-        this.ngOnInit();
+        this.activateSvelteComponent();
       }
     });
   }
 
   private overviewInstance: typeof OverviewView;
   ngOnInit(): void {
-    // Create Svelte component
+    this.periodService.announceEnablePeriod(true);
+    this.activateSvelteComponent();
+
+    this.periodService.periodAnnouncement$.subscribe((period) => {
+      this.overviewInstance.$set({ period: period.toLowerCase() });
+    });
+  }
+
+  activateSvelteComponent() {
+    this.periodService.announcePeriod(PeriodType.DAY);
+
+    // Remove previous
     if (this.overviewInstance) {
       this.overviewInstance.$destroy();
     }
@@ -57,6 +73,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Dispose Svelte component
+    this.periodService.announceEnablePeriod(false);
     this.overviewInstance?.$destroy();
   }
 }

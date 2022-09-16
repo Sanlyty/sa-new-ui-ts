@@ -1,0 +1,7 @@
+#root {
+    --header-sticky-padding-top: 4em;
+}
+
+.overview-view {
+    margin-top: 2em;
+}
