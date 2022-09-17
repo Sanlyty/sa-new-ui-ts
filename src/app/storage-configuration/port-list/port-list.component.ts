@@ -27,26 +27,26 @@ export class PortListComponent extends StorageEntityList {
   ngOnInit() {
     // Index, Label, Formatter?, ColumnTooltip?
     const cols: [string, string, Type<any>?, string?][] = [
-      ["parentName", "Channel Board"],
       ["name", "Name"],
+      ["parentName", "Channel Board"],
       ["speed", "Speed", SpeedFormatterComponent],
       ["cables", "Cables"],
       ["switch", "Switch"],
+      ["slot", "Slot/Port"],
+      ["note", "Description"],
       ["covers", "Covers the room"],
-      [
-        "automation",
-        "Automation",
-        CheckmarkComponent,
-        "Define if FE port is available for automation",
-      ],
       [
         "throughput",
         "Throughput",
         SpeedFormatterComponent,
         "Weekly Average Throughput for particular FE port",
       ],
-      ["slot", "Slot/Port"],
-      ["note", "Description"],
+      [
+        "automation",
+        "Automation",
+        CheckmarkComponent,
+        "Define if FE port is available for automation",
+      ],
       ["wwn", "WWN"],
       ["status", "Active", StorageEntityStatusComponent],
     ];
