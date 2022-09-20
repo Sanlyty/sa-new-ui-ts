@@ -51,6 +51,7 @@ const mapSystemToDirectory = {
   XP7_QAS1_20610: "51",
   XP7_QAS2_56139: "52",
   XP8_QAS22_40268: "53",
+  XP8_QAS21_60133: "54",
 
   XP7_STL2_10558: "62",
   XP7_STL3_58634: "63",
