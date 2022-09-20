@@ -1,5 +1,5 @@
 #root {
-    --header-sticky-padding-top: 4em;
+    --overview-inner-width: 100%;
 }
 
 .overview-view {
