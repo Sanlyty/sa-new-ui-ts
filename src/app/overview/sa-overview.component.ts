@@ -75,7 +75,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
       "optionChanged",
       (e: { detail: { option: string } }) => {
         if (e.detail.option === "custom") {
-          this.periodService.announcePeriod("CUSTOM" as any);
+          this.periodService.announcePeriod(PeriodType.CUSTOM);
         }
       }
     );
