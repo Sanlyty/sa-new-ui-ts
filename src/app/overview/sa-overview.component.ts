@@ -45,6 +45,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
   private overviewInstance: typeof OverviewView;
   ngOnInit(): void {
     this.periodService.announceEnablePeriod(true);
+    this.periodService.announceCustomEnablePeriod(true);
     this.activateSvelteComponent();
 
     this.periodService.periodAnnouncement$.subscribe((period) => {
@@ -69,6 +70,16 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
         },
       },
     });
+
+    this.overviewInstance.$on(
+      "optionChanged",
+      (e: { detail: { option: string } }) => {
+        console.log(e);
+        if (e.detail.option === "custom") {
+          this.periodService.announcePeriod("CUSTOM" as any);
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
