@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 import { OverviewView } from "sa-overview-svelte";
 import { PeriodType } from "../metric.service";
 import { PeriodService } from "../period.service";
@@ -28,11 +29,14 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
 
   @ViewChild("root", { static: true }) rootElement: ElementRef;
 
+  private routeSub: Subscription;
+  private periodSub: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     protected periodService: PeriodService
   ) {
-    route.paramMap.subscribe((map) => {
+    this.routeSub = route.paramMap.subscribe((map) => {
       this.system = map.get("system");
       this.view = map.get("view");
 
@@ -48,9 +52,11 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     this.periodService.announceCustomEnablePeriod(true);
     this.activateSvelteComponent();
 
-    this.periodService.periodAnnouncement$.subscribe((period) => {
-      this.overviewInstance.$set({ period: period.toLowerCase() });
-    });
+    this.periodSub = this.periodService.periodAnnouncement$.subscribe(
+      (period) => {
+        this.overviewInstance.$set({ period: period.toLowerCase() });
+      }
+    );
   }
 
   activateSvelteComponent() {
@@ -86,5 +92,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     // Dispose Svelte component
     this.periodService.announceEnablePeriod(false);
     this.overviewInstance?.$destroy();
+    this.routeSub.unsubscribe();
+    this.periodSub?.unsubscribe();
   }
 }
