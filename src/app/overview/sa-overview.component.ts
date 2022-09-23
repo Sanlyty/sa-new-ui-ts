@@ -54,7 +54,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
   }
 
   activateSvelteComponent() {
-    this.periodService.announcePeriod(PeriodType.DAY);
+    this.periodService.announcePeriod(PeriodType.WEEK);
 
     // Remove previous
     if (this.overviewInstance) {
@@ -64,6 +64,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     this.overviewInstance = new OverviewView({
       target: this.rootElement.nativeElement,
       props: {
+        period: "week",
         system: this.system,
         params: {
           board: viewMap[this.view] ?? "dashBoard",
