@@ -41,13 +41,13 @@ export class PortListComponent extends StorageEntityList {
         SpeedFormatterComponent,
         "Weekly Average Throughput for particular FE port",
       ],
+      ["wwn", "WWN"],
       [
         "automation",
         "Automation",
         CheckmarkComponent,
         "Define if FE port is available for automation",
       ],
-      ["wwn", "WWN"],
       ["status", "Active", StorageEntityStatusComponent],
     ];
 
