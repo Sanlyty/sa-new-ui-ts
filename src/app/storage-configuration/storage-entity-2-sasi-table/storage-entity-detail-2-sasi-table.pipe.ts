@@ -70,6 +70,9 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
         row.cells["covers"] = new SasiCell(detail.covers, {
           value: detail.covers,
         });
+        row.cells["san_env"] = new SasiCell(detail.san_env, {
+          value: detail.san_env,
+        });
         row.cells["automation"] = new SasiCell(detail.automation, {
           value: detail.automation,
         });

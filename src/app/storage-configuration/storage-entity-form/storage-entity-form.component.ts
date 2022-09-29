@@ -45,6 +45,7 @@ export class StorageEntityVo {
   slot: string;
   wwn: string;
   covers?: string;
+  san_env?: string;
   automation?: boolean;
   throughput?: number;
   duplicateOperation = false;
@@ -324,6 +325,10 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
 
   get covers() {
     return this.form.get("covers");
+  }
+
+  get san_env() {
+    return this.form.get("san_env");
   }
 
   get automation() {

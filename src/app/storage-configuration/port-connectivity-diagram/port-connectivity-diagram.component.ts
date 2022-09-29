@@ -109,6 +109,10 @@ export class PortConnectivityDiagramComponent implements OnInit {
           "Covers",
           detail.covers
         ),
+        PortConnectivityDiagramComponent.getTooltipItem(
+          "SAN Env",
+          detail.san_env
+        ),
         PortConnectivityDiagramComponent.getTooltipItem("WWN", detail.wwn),
         PortConnectivityDiagramComponent.getTooltipItem(
           "Switch",

@@ -35,6 +35,7 @@ export class PortListComponent extends StorageEntityList {
       ["slot", "Slot/Port"],
       ["note", "Description"],
       ["covers", "Covers the room"],
+      ["san_env", "SAN Env"],
       [
         "throughput",
         "Throughput",

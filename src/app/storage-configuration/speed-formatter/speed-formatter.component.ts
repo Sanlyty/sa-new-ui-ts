@@ -55,6 +55,7 @@ export class SpeedFormatterComponent implements OnInit {
         "switch",
         "slot",
         "covers",
+        "san_env",
         "automation",
         "throughput",
         "wwn",
