@@ -16,6 +16,7 @@ const viewMap = {
   cache: "cacheBoard",
   channel: "channelBoard",
   trends: "trendsBoard",
+  dpSla: "dpPoolBoard",
 };
 
 @Component({
