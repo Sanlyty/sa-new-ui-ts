@@ -313,14 +313,16 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
 
   getTableData(id: number): StorageEntityMetricDto[] {
     this.metricService.getCapacityStatistics(id).subscribe(
-      (data) => (this.data = MetricHandlerUtils.success(data)),
+      (data) => {
+        this.data = MetricHandlerUtils.success(data);
+        console.log(this.data);
+      },
       (error) => (this.data = MetricHandlerUtils.error(error))
     );
     return this.data;
   }
 
   selectTier(tier: number) {
-    console.log(tier);
     document.querySelectorAll(".system-name").forEach((sysElem) => {
       if (!(sysElem as HTMLElement).innerText.endsWith(`-T${tier}`)) return;
 

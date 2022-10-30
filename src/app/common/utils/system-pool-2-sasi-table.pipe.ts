@@ -30,6 +30,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
         id: linkIdInput,
         iFrameLink: context,
         value: system.name,
+        pool: system.type === "pool" ? undefined : (system as any).referenceId,
       });
       if (system.metrics !== undefined) {
         system.metrics.forEach(
