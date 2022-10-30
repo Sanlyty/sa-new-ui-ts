@@ -20,7 +20,7 @@ export class SideMenuComponent implements OnInit {
     { linkPart: "dashboard", name: "Dashboard" },
     { linkPart: "dpSla", name: "DP Pool Board and SLA" },
     { linkPart: "cache", name: "Cache Board" },
-    { linkPart: "adapters", name: "CHA Adapters Board" },
+    { linkPart: "adapters", name: "CHB and FE Ports" },
     { linkPart: "trends", name: "Trends" },
   ];
   globalStatisticsLinks = [];
@@ -79,7 +79,7 @@ export class SideMenuComponent implements OnInit {
       { linkPart: `/global-statistics/dp-sla`, name: "SLA Events" },
       {
         linkPart: `/global-statistics/adapters`,
-        name: "CHA&Port Imbalances",
+        name: "CHB and FE Port Imbalances",
       },
       {
         linkPart: `/global-statistics/host-group-capacity`,
