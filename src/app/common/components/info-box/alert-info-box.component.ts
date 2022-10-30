@@ -1,53 +1,53 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Occurence} from '../../models/metrics/occurence.vo';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EntityType} from '../../models/metrics/entity-type.enum';
-import {MetricService} from '../../../metric.service';
-import {Alert} from '../../models/metrics/alert.vo';
-import {AlertType} from '../../models/metrics/alert-type.enum';
+import { Component, Input, OnInit } from "@angular/core";
+import { Occurence } from "../../models/metrics/occurence.vo";
+import { ActivatedRoute, Router } from "@angular/router";
+import { EntityType } from "../../models/metrics/entity-type.enum";
+import { MetricService } from "../../../metric.service";
+import { Alert } from "../../models/metrics/alert.vo";
+import { AlertType } from "../../models/metrics/alert-type.enum";
 
 @Component({
-  selector: 'app-alert-info-box',
-  templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.css']
+  selector: "app-alert-info-box",
+  templateUrl: "./info-box.component.html",
+  styleUrls: ["./info-box.component.css"],
 })
 export class AlertInfoBoxComponent implements OnInit {
-
   value: number;
   @Input() label: string;
   @Input() context: string;
   minValue = 0;
   maxValue = 0;
   @Input() threshold = 0;
-  @Input() icon = '';
+  @Input() icon = "";
   data: Occurence[] = [];
   @Input() alert: Alert;
   @Input() infoBoxTooltip: string;
 
   entityType = EntityType;
-  modalState = 'close';
+  modalState = "close";
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private metric: MetricService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (this.data.length > 0) {
-
-      const result = this.data.sort(
-        (occurence1, occurrence2) => {
-          return occurrence2.value - occurence1.value;
-        }
-      );
+      const result = this.data.sort((occurence1, occurrence2) => {
+        return occurrence2.value - occurence1.value;
+      });
     }
     this.value = this.alert.occurrences.length;
     this.data = this.alert.occurrences;
     this.minValue = this.alert.minValue;
     this.maxValue = this.alert.maxValue;
-    this.infoBoxTooltip = this.getThresholdMessage(this.alert.type, this.alert.minValue, this.alert.maxValue, this.alert.unit);
+    this.infoBoxTooltip = this.getThresholdMessage(
+      this.alert.type,
+      this.alert.minValue,
+      this.alert.maxValue,
+      this.alert.unit
+    );
   }
 
   isOverThreshold() {
@@ -55,36 +55,40 @@ export class AlertInfoBoxComponent implements OnInit {
   }
 
   openModal() {
-    this.modalState = 'open';
+    this.modalState = "open";
   }
 
   closeModal() {
-    this.modalState = 'close';
+    this.modalState = "close";
   }
 
   isModalOpened() {
-    return this.modalState === 'open';
+    return this.modalState === "open";
   }
 
   getIframeLink(entityType: EntityType) {
     switch (entityType) {
       case EntityType.ADAPTER:
-        return 'adapters';
+        return "adapters";
       case EntityType.POOL:
-        return 'capacityAnalysis';
+        return "trends";
       case EntityType.SYSTEM:
-        return 'dashboard';
-
+        return "dashboard";
     }
   }
 
-  getThresholdMessage(type: AlertType, minValue: number, maxValue: number, unit: string) {
+  getThresholdMessage(
+    type: AlertType,
+    minValue: number,
+    maxValue: number,
+    unit: string
+  ) {
     if (maxValue == null && minValue == null) {
-      return 'Everything works right!';
+      return "Everything works right!";
     }
     let sanitizeUnit = unit;
     if (sanitizeUnit == null) {
-      sanitizeUnit = '';
+      sanitizeUnit = "";
     }
     if (maxValue == null) {
       return `${this.label} over ${minValue}${sanitizeUnit}`;
@@ -99,13 +103,11 @@ export class AlertInfoBoxComponent implements OnInit {
     switch (entityType) {
       case EntityType.ADAPTER:
       case EntityType.PORT:
-        return 'adapters';
+        return "adapters";
       case EntityType.POOL:
-        return 'capacityAnalysis';
+        return "trends";
       case EntityType.SYSTEM:
-        return 'dashboard';
-
+        return "dashboard";
     }
   }
-
 }

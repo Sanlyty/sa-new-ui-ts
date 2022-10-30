@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { IframeComponent } from "./components/iframe/iframe.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { SaOverviewComponent } from "./overview/sa-overview.component";
 
@@ -12,7 +11,6 @@ const routes: Routes = [
       breadcrumb: "Dashboard",
     },
   },
-  { path: "iframe/:url", component: IframeComponent },
   {
     path: "overview/:system/:view",
     component: SaOverviewComponent,

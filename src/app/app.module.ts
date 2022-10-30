@@ -6,7 +6,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { SideMenuComponent } from "./components/side-menu/side-menu.component";
-import { IframeComponent } from "./components/iframe/iframe.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { GlobalStatisticsModule } from "./global-statistics/global-statistics.module";
 import { SanInfrastructureModule } from "./san-infrastructure/san-infrastructure.module";
@@ -35,7 +34,6 @@ export const httpInterceptorProviders = [
     AppComponent,
     HeaderComponent,
     SideMenuComponent,
-    IframeComponent,
     DashboardComponent,
     RegionDonutComponent,
     HistoryChartComponent,

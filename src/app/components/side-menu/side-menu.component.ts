@@ -11,25 +11,17 @@ import { SortStorageEntity } from "../../common/utils/sort-storage-entity";
   styleUrls: ["./side-menu.component.css"],
 })
 export class SideMenuComponent implements OnInit {
-  constructor(private metricService: MetricService) {
-    this.poolMetricLinks = this.poolMetricLinks.flatMap((link) => [
-      { ...link, raw: true },
-      { ...link, name: link.name + "(Old)" },
-    ]);
-  }
+  constructor(private metricService: MetricService) {}
 
   items: MenuTree[];
   filteredItems: MenuTree[];
   searchExpression: string;
   poolMetricLinks = [
     { linkPart: "dashboard", name: "Dashboard" },
-    { linkPart: "serverBoard", name: "Server board" },
     { linkPart: "dpSla", name: "DP Pool Board and SLA" },
-    { linkPart: "deepAnalysis", name: "Deep Analysis" },
     { linkPart: "cache", name: "Cache Board" },
     { linkPart: "adapters", name: "CHA Adapters Board" },
     { linkPart: "trends", name: "Trends" },
-    { linkPart: "capacityAnalysis", name: "Capacity Analysis" },
   ];
   globalStatisticsLinks = [];
   storageConfigurationLinks = [];

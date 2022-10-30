@@ -74,15 +74,8 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                
                 <li *ngFor="let poolLink of poolMetricLinks">
                   <a
-                    *ngIf="!poolLink.raw"
-                    [routerLink]="link.name | iframeUrlCreator:{iframeLink: poolLink.linkPart}"
-                    routerLinkActive="active"
-                  >{{poolLink.name}}</a>
-                  <a
-                    *ngIf="poolLink.raw"
                     [routerLink]="'/overview/' + link.name + '/' + poolLink.linkPart"
                     routerLinkActive="active"
                   >{{poolLink.name}}</a>

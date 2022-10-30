@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <app-tier-select (onSelect)="selectTier($event)"></app-tier-select>
     <div class="row">
-      <app-sasi-table class="table-right" [data]="data | systemPool2SasiGroupTable: 'capacityAnalysis'"
+      <app-sasi-table class="table-right" [data]="data | systemPool2SasiGroupTable: 'trends'"
                       [tableOptions]="options"></app-sasi-table>
       <app-aggregated-statistics class='col-md-12 sticky-bottom' [aggregatedColumns]="options.getAggregatedColumns()"
                                  [data]="data | systemPool2SasiGroupTable" [selectedRows]="selectedRows"

@@ -14,7 +14,7 @@ import { PeriodService } from "../period.service";
 const viewMap = {
   dashboard: "dashBoard",
   cache: "cacheBoard",
-  channel: "channelBoard",
+  adapters: "channelBoard",
   trends: "trendsBoard",
   dpSla: "dpPoolBoard",
 };
