@@ -49,7 +49,6 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
 
   private overviewInstance: typeof OverviewView;
   ngOnInit(): void {
-    this.periodService.announceEnablePeriod(true);
     this.periodService.announceCustomEnablePeriod(true);
     this.activateSvelteComponent();
 
@@ -61,6 +60,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
   }
 
   activateSvelteComponent() {
+    this.periodService.announceEnablePeriod(this.view !== "trends");
     this.periodService.announcePeriod(PeriodType.WEEK);
 
     // Remove previous
