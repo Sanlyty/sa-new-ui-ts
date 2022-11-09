@@ -9,16 +9,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Use Node.js 16
       uses: actions/setup-node@v1
       with:
         node-version: 16
+    - uses: actions/checkout@v2
+      path: sa-new-ui-ts
+    - uses: actions/checkout@v2
+      repository: Sanlyty/sa-overview-svelte
+      path: sa-overview-svelte
+    - run: yarn
+      working-directory: sa-overview-svelte
+    - run: yarn build
+      working-directory: sa-overview-svelte
     - run: npm i
+      working-directory: sa-new-ui-ts
     - run: npm run build
+      working-directory: sa-new-ui-ts
     - name: Create the release.zip file
       run: zip -r ../release.zip .
-      working-directory: dist/
+      working-directory: sa-new-ui-ts/dist/
     - uses: actions/create-release@v1
       id: create_release
       env:
@@ -33,6 +43,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./release.zip
+        asset_path: ./sa-new-ui-ts/release.zip
         asset_name: release.zip
         asset_content_type: application/zip
