@@ -10,15 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Use Node.js 16
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 16
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         path: sa-new-ui-ts
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         repository: Sanlyty/sa-overview-svelte
+        token: ${{ secrets.GH_PAT }}
         path: sa-overview-svelte
     - run: yarn
       working-directory: sa-overview-svelte
