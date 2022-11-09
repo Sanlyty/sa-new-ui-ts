@@ -14,10 +14,12 @@ jobs:
       with:
         node-version: 16
     - uses: actions/checkout@v2
-      path: sa-new-ui-ts
+      with:
+        path: sa-new-ui-ts
     - uses: actions/checkout@v2
-      repository: Sanlyty/sa-overview-svelte
-      path: sa-overview-svelte
+      with:
+        repository: Sanlyty/sa-overview-svelte
+        path: sa-overview-svelte
     - run: yarn
       working-directory: sa-overview-svelte
     - run: yarn build
