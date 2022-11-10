@@ -47,7 +47,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  private overviewInstance: typeof OverviewView;
+  private overviewInstance: OverviewView;
   ngOnInit(): void {
     this.periodService.announceCustomEnablePeriod(true);
     this.activateSvelteComponent();
