@@ -11,7 +11,7 @@
           {{httpError}}
         </div>
         <form role="form" [formGroup]="form">
-          <div class="box-body">
+          <div class="box-body two-cols">
             <div class="col-md-12 form-group" *ngIf="parent !== null && data.type !== staticType.DATACENTER && !data.duplicateOperation"
                  [class.has-error]="parent.invalid && (parent.dirty || parent.touched || submitted)">
               <label for="parent">{{getStaticData(data.type).parentNameLabel}}:</label>
@@ -122,6 +122,14 @@
                 <label for="covers">Covers the room: </label>
                 <input id="covers" class="form-control" type="text" formControlName="covers">
                 <span *ngIf="covers.invalid && covers.errors.maxlength !== null" class="help-block">Covers the room too long</span>
+              </div>
+            </div>
+            <div *ngIf="san_env !== null">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="san_env.invalid && (san_env.dirty || san_env.touched || submitted)">
+                <label for="san_env">SAN Env: </label>
+                <input id="san_env" class="form-control" type="text" formControlName="san_env">
+                <span *ngIf="san_env.invalid && san_env.errors.maxlength !== null" class="help-block">SAN Env too long</span>
               </div>
             </div>
             <div *ngIf="automation !== null">

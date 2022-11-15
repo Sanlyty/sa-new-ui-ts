@@ -233,6 +233,9 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
           wwn: new FormControl(this.data.wwn, [Validators.maxLength(100)]),
           slot: new FormControl(this.data.slot, [Validators.maxLength(30)]),
           covers: new FormControl(this.data.covers, [Validators.maxLength(64)]),
+          san_env: new FormControl(this.data.san_env, [
+            Validators.maxLength(64),
+          ]),
           automation: new FormControl(this.data.automation),
           switch: new FormControl(this.data.switch, [Validators.maxLength(30)]),
           forceAsNew: new FormControl(this.forceAsNew),
@@ -252,6 +255,9 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
             ]),
             wwn: new FormControl(this.data.wwn, [Validators.maxLength(100)]),
             slot: new FormControl(this.data.slot, [Validators.maxLength(30)]),
+            san_env: new FormControl(this.data.san_env, [
+              Validators.maxLength(64),
+            ]),
             covers: new FormControl(this.data.covers, [
               Validators.maxLength(64),
             ]),
@@ -413,6 +419,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
         "switch",
         "slot",
         "covers",
+        "san_env",
         "automation",
         "wwn",
       ];

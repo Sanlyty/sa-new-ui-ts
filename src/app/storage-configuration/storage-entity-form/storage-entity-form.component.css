@@ -11,3 +11,13 @@
   width: 32px;
   height: 32px;
 }
+
+.two-cols {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.box-body.two-cols::before {
+  content: none;
+  display: none;
+}
