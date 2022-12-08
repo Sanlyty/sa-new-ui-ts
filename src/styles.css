@@ -9,3 +9,7 @@
 @import url("assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css");
 @import '../node_modules/@syncfusion/ej2-angular-diagrams/styles/material.css';
 @import '../node_modules/sa-overview-svelte/dist/style.css';
+
+a.sidebar-toggle::before {
+    content: none !important;
+}
