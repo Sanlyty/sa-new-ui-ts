@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "dotenv ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -52,6 +52,7 @@
     "@types/node": "~12.12.54",
     "ajv": "^6.10.2",
     "codelyzer": "^6.0.0",
+    "dotenv-cli": "^6.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^5.1.1",
