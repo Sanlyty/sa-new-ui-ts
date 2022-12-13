@@ -13,3 +13,8 @@
 a.sidebar-toggle::before {
     content: none !important;
 }
+
+.main-header .logo .logo-lg {
+    font-size: large;
+    white-space: nowrap;
+}
