@@ -1,9 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { MenuTree } from "../../common/models/menu-tree.vo";
-import { MetricService } from "../../metric.service";
-import { MenuItem } from "../../common/models/menu-item.vo";
-import { StorageEntityResponseDto } from "../../common/models/dtos/storage-entity-response.dto";
-import { SortStorageEntity } from "../../common/utils/sort-storage-entity";
+import feMode from "../../FeMode";
+
+type MainMenuItem = {
+  label: string;
+  items: SubMenuItem[];
+};
+
+type SubMenuItem = {
+  label: string;
+  link: string;
+};
 
 @Component({
   selector: "app-side-menu",
@@ -11,104 +17,119 @@ import { SortStorageEntity } from "../../common/utils/sort-storage-entity";
   styleUrls: ["./side-menu.component.css"],
 })
 export class SideMenuComponent implements OnInit {
-  constructor(private metricService: MetricService) {}
+  mode = "hp";
 
-  items: MenuTree[];
-  filteredItems: MenuTree[];
+  items: MainMenuItem[];
+  filteredItems: MainMenuItem[];
   searchExpression: string;
-  poolMetricLinks = [
-    { linkPart: "dashboard", name: "Dashboard" },
-    { linkPart: "dpSla", name: "DP Pool Board and SLA" },
-    { linkPart: "cache", name: "Cache Board" },
-    { linkPart: "adapters", name: "CHB and FE Ports" },
-    { linkPart: "trends", name: "Trends" },
-  ];
-  globalStatisticsLinks = [];
-  storageConfigurationLinks = [];
-  sanInfraLinks = [
-    {
-      id: 1,
-      linkPart: `/san-infrastructure/top-talkers`,
-      name: "Top Talkers Analysis",
-    },
-  ];
-  private defaultDataCenter: number;
+  overviewLinks: Record<string, SubMenuItem[]> = {
+    hp: [
+      { link: "dashboard", label: "Dashboard" },
+      { link: "dpSla", label: "DP Pool Board and SLA" },
+      { link: "cache", label: "Cache Board" },
+      { link: "adapters", label: "CHB and FE Ports" },
+      { link: "trends", label: "Trends" },
+    ],
+    emc: [
+      { link: "emcDashBoard", label: "Dashboard" },
+      { link: "emcHostAnalysis", label: "Host Analysis" },
+      { link: "emcTrendsBoard", label: "Trends" },
+    ],
+  };
 
-  static convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {
-    return SortStorageEntity.sort(data).map(
-      (dataCenter) =>
-        new MenuTree(
-          dataCenter.storageEntity.name,
-          dataCenter.storageEntity.children.map(
-            (system) => new MenuItem(system.id, system.name)
-          )
-        )
-    );
-  }
+  mainMenu: Record<string, MainMenuItem[]> = {
+    hp: [
+      {
+        label: "Global Statistics",
+        items: [
+          {
+            link: `/global-statistics/performance`,
+            label: "Performance Statistics",
+          },
+          {
+            link: `/global-statistics/physical-capacity`,
+            label: "Physical Capacity",
+          },
+          {
+            link: `/global-statistics/logical-capacity`,
+            label: "Logical Capacity",
+          },
+          { link: `/global-statistics/dp-sla`, label: "SLA Events" },
+          {
+            link: `/global-statistics/adapters`,
+            label: "CHB and FE Port Imbalances",
+          },
+          {
+            link: `/global-statistics/host-group-capacity`,
+            label: "VMware Capacity",
+          },
+          {
+            link: `/global-statistics/latency`,
+            label: "Latency Analysis",
+          },
+          {
+            link: `/global-statistics/parity-group-events`,
+            label: "Parity Group Events",
+          },
+        ],
+      },
+      {
+        label: "Storage Configuration",
+        items: [
+          {
+            label: "Systems by locations",
+            link: `/storage-config/locations`,
+          },
+          {
+            label: "Port connectivity",
+            link: `/storage-config/port-connectivity`,
+          },
+        ],
+      },
+      {
+        label: "SAN Infrastructure",
+        items: [
+          {
+            label: "Top Talkers Analysis",
+            link: `/san-infrastructure/top-talkers`,
+          },
+        ],
+      },
+    ],
+    emc: [
+      {
+        label: "Global Statistics",
+        items: [
+          {
+            label: "Performance Statistics",
+            link: "/global-statistics-emc/performance",
+          },
+          {
+            label: "Capacity Statistics",
+            link: "/global-statistics-emc/capacity",
+          },
+          {
+            label: "Imbalance Statistics",
+            link: "/global-statistics-emc/imbalance",
+          },
+          {
+            label: "VMWare Capacity",
+            link: "/global-statistics-emc/vmware",
+          },
+        ],
+      },
+    ],
+  };
 
   ngOnInit() {
-    this.metricService.getDataCenters().subscribe((data) => {
-      this.items = SideMenuComponent.convertMenu(data);
-      this.setDefaultDataCenter(data);
+    feMode.then((fe) => {
+      this.mode = fe.mode;
+      this.items = Object.entries(fe.map).map(([label, systems]) => ({
+        label,
+        items: systems.map((label, idx) => ({ label, link: "-" })),
+      }));
       this.filteredItems = this.items;
     });
-  }
-
-  private setDefaultDataCenter(dataCenters: StorageEntityResponseDto[]) {
-    if (dataCenters.length > 0) {
-      this.defaultDataCenter = dataCenters[0].storageEntity.id;
-      this.setGlobalStatisticsLinks();
-      this.setSystemConfigurationLinks();
-    }
-  }
-
-  private setGlobalStatisticsLinks() {
-    this.globalStatisticsLinks = [
-      {
-        linkPart: `/global-statistics/performance`,
-        name: "Performance Statistics",
-      },
-      {
-        linkPart: `/global-statistics/physical-capacity`,
-        name: "Physical Capacity",
-      },
-      {
-        linkPart: `/global-statistics/logical-capacity`,
-        name: "Logical Capacity",
-      },
-      { linkPart: `/global-statistics/dp-sla`, name: "SLA Events" },
-      {
-        linkPart: `/global-statistics/adapters`,
-        name: "CHB and FE Port Imbalances",
-      },
-      {
-        linkPart: `/global-statistics/host-group-capacity`,
-        name: "VMware Capacity",
-      },
-      {
-        linkPart: `/global-statistics/latency`,
-        name: "Latency Analysis",
-      },
-      {
-        linkPart: `/global-statistics/parity-group-events`,
-        name: "Parity Group Events",
-      },
-    ];
-  }
-
-  private setSystemConfigurationLinks() {
-    this.storageConfigurationLinks = [
-      {
-        id: 1,
-        linkPart: `/storage-config/locations`,
-        name: "Systems by locations",
-      },
-      {
-        id: 2,
-        linkPart: `/storage-config/port-connectivity`,
-        name: "Port connectivity",
-      },
-    ];
   }
 
   search(): void {
@@ -120,9 +141,9 @@ export class SideMenuComponent implements OnInit {
     this.filteredItems = [];
     for (const tree of this.items) {
       for (const item of tree.items) {
-        if (item.name.indexOf(this.searchExpression) > -1) {
+        if (item.label.indexOf(this.searchExpression) > -1) {
           if (filteredTree === null) {
-            filteredTree = new MenuTree(tree.label, []);
+            filteredTree = { label: tree.label, items: [] };
           }
           filteredTree.items.push(item);
         }

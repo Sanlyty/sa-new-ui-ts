@@ -1,4 +1,4 @@
-import {MenuItem} from './menu-item.vo';
+import { MenuItem } from "./menu-item.vo";
 
 export class MenuTree {
   label: string;
@@ -8,5 +8,4 @@ export class MenuTree {
     this.label = label;
     this.items = items;
   }
-
 }

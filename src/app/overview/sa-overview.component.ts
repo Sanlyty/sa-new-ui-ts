@@ -37,7 +37,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     protected periodService: PeriodService
   ) {
-    this.routeSub = route.paramMap.subscribe((map) => {
+    this.routeSub = this.route.paramMap.subscribe((map) => {
       this.system = map.get("system");
       this.view = map.get("view");
 
@@ -74,7 +74,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
         period: "week",
         system: this.system,
         params: {
-          board: viewMap[this.view] ?? "dashBoard",
+          board: viewMap[this.view] ?? this.view,
         },
       },
     });

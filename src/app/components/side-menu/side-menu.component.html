@@ -1,46 +1,21 @@
-<!--<script src="../../../../WEB/sub-content-loader.js"></script>-->
 <aside class="main-sidebar">
-
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <div class="top-part-menu">
       <ul id="dash-link" class="sidebar-menu">
         <li><a href=""><i class="fa fa-home"></i><span>Main dashboard</span></a></li>
       </ul>
-      <!-- Sidebar Menu.ts -->
       <ul id="dash-menu" class="sidebar-menu" data-widget="tree">
-
-        <li class="treeview">
-          <a href="#"><i class="fa fa-chart-area"></i><span>Global Statistics</span>
+        <li *ngFor="let mainItem of mainMenu[mode]" class="treeview">
+          <a href="#"><i class="fa fa-chart-area"></i><span>{{mainItem.label}}</span>
             <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
           <ul class="treeview-menu">
-            <li *ngFor="let globalLink of globalStatisticsLinks"
-            ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-chart-area"></i><span>Storage configuration</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li *ngFor="let globalLink of storageConfigurationLinks"
-            ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-chart-area"></i><span>SAN infrastructure</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li *ngFor="let globalLink of sanInfraLinks"
-            ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
+            <li *ngFor="let subItem of mainItem.items">
+              <a [routerLink]="[subItem.link]" routerLinkActive="active">{{subItem.label}}</a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -68,17 +43,17 @@
           </a>
           <ul class="treeview-menu">
             <li *ngFor="let link of menuItem.items" class="treeview">
-              <a href="#"><i class="fa fa-cogs"></i><span>{{link.name}}</span>
+              <a href="#"><i class="fa fa-cogs"></i><span>{{link.label}}</span>
                 <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
               </a>
               <ul class="treeview-menu">
-                <li *ngFor="let poolLink of poolMetricLinks">
+                <li *ngFor="let ovLink of overviewLinks[mode]">
                   <a
-                    [routerLink]="'/overview/' + link.name + '/' + poolLink.linkPart"
+                    [routerLink]="'/overview/' + link.label + '/' + ovLink.link"
                     routerLinkActive="active"
-                  >{{poolLink.name}}</a>
+                  >{{ovLink.label}}</a>
                 </li>
               </ul>
             </li>
