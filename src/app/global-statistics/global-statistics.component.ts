@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Datacenter } from "../common/models/datacenter.vo";
+import { Datacenter, datacenterOf } from "../common/models/datacenter.vo";
 import { MetricService } from "../metric.service";
-import { BusService } from "./bus.service";
 import { SortStorageEntity } from "../common/utils/sort-storage-entity";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 
 @Component({
   selector: "app-global-statistics",
@@ -12,18 +12,28 @@ import { SortStorageEntity } from "../common/utils/sort-storage-entity";
 export class GlobalStatisticsComponent implements OnInit {
   dataCenters: Datacenter[] = [];
   currentTab: number;
-  context: string;
 
-  constructor(private metricService: MetricService, private bus: BusService) {}
+  constructor(
+    private metricService: MetricService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.bus.datacenterAnnouncement$.subscribe((id) => this.getDataCenters(id));
-    this.bus.contextAnnouncement$.subscribe((context) => {
-      setTimeout(
-        () =>
-          // setTimeout is small hack because off View checking for changes
-          (this.context = context)
-      );
+    this.metricService.getDataCenters().subscribe((data) => {
+      this.dataCenters = [
+        // The default datacenter
+        {
+          id: -1,
+          label: "All",
+        },
+        ...SortStorageEntity.sort(data).map(datacenterOf),
+      ];
+    });
+
+    this.infoFromRoute();
+    this.router.events.subscribe((e) => {
+      if (e instanceof NavigationEnd) this.infoFromRoute();
     });
   }
 
@@ -35,51 +45,23 @@ export class GlobalStatisticsComponent implements OnInit {
     return id === this.currentTab;
   }
 
-  getDataCenters(currentTab: number) {
-    this.metricService.getDataCenters().subscribe((data) => {
-      const sortedData = SortStorageEntity.sort(data);
-      this.dataCenters = [];
-      const defaultDatacenter = new Datacenter();
-      defaultDatacenter.label = "All";
-      defaultDatacenter.id = -1;
-      this.dataCenters.push(defaultDatacenter);
-      this.dataCenters = [
-        ...this.dataCenters,
-        ...sortedData.map(Datacenter.of),
-      ];
-      this.currentTab = currentTab;
-    });
+  infoFromRoute() {
+    const data = this.route.firstChild.snapshot.data;
+    this.currentTab =
+      Number(this.route.firstChild.snapshot.paramMap.get("id")) ?? -1;
+    this.title = data.title ?? data.breadcrumb ?? "Statistics";
+    this.tabTitle = data.tabTitle;
+    this.context = this.route.firstChild.snapshot.url[0]?.path;
   }
 
+  private context = "-";
+  private title = "Statistics";
   getTitle() {
-    switch (this.context) {
-      case "performance":
-        return "Performance Statistics";
-      case "physical-capacity":
-        return "Physical Capacity";
-      case "logical-capacity":
-        return "Logical capacity";
-      case "host-group-capacity":
-        return "VMware Capacity";
-      case "dp-sla":
-        return "SLA Events";
-      case "adapters":
-        return "CHB and FE Port Imbalances";
-      case "parity-group-events":
-        return "Parity Group Utilization";
-      default:
-        return "Statistics";
-    }
+    return this.title;
   }
 
+  private tabTitle: string | undefined = undefined;
   getTabTitle() {
-    switch (this.context) {
-      case "physical-capacity":
-        return "Physical Capacity by Datacenter";
-      case "logical-capacity":
-        return "Logical Capacity by Datacenter";
-      case "host-group-capacity":
-        return "VMware Capacity by Datacenter";
-    }
+    return this.tabTitle;
   }
 }

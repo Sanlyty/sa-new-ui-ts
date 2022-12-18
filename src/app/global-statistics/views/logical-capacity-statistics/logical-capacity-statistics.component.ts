@@ -7,7 +7,6 @@ import {
 } from "../../../common/components/sasi-table/sasi-table.component";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MetricService } from "../../../metric.service";
-import { BusService } from "../../bus.service";
 import { SimpleFormatterComponent } from "../../formatters/simple-formatter/simple-formatter.component";
 import { RowGroupTableComponent } from "../../../common/components/sasi-table/row-group-table/row-group-table.component";
 import { RouteLinkFormatterComponent } from "../../../common/components/route-link-formatter/route-link-formatter.component";
@@ -58,7 +57,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     protected metricService: MetricService,
-    protected bus: BusService,
     protected localStorageService: LocalStorageService
   ) {
     this.options.columns.push(
@@ -424,8 +422,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = +params.get("id");
-      this.bus.announceDatacenter(id);
-      this.bus.announceContext("logical-capacity");
       this.getTableData(id);
     });
     this.localStorageService

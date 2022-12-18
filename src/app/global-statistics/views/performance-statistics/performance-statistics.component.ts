@@ -3,7 +3,6 @@ import { MetricService, PeriodType } from "../../../metric.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import { PeriodService } from "../../../period.service";
-import { BusService } from "../../bus.service";
 import {
   SasiColumnBuilder,
   SasiSortType,
@@ -11,7 +10,6 @@ import {
 } from "../../../common/components/sasi-table/sasi-table.component";
 import { UnitFormatterComponent } from "../../formatters/unit-formatter/unit-formatter.component";
 import { RouteLinkFormatterComponent } from "../../../common/components/route-link-formatter/route-link-formatter.component";
-import { AlertFormatterComponent } from "../../formatters/alert-formatter/alert-formatter.component";
 import { AlertRule, Threshold } from "../../alert-rule";
 import { RowTableComponent } from "../../../common/components/sasi-table/row-table/row-table.component";
 import { SimpleSortImpl } from "../../../common/components/sasi-table/simple-sort-impl";
@@ -35,10 +33,8 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private metricService: MetricService,
-    private periodService: PeriodService,
-    private bus: BusService
+    private periodService: PeriodService
   ) {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
@@ -161,8 +157,6 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = +params.get("id");
-      this.bus.announceDatacenter(id);
-      this.bus.announceContext("performance");
       this.data = this.getTableData(id);
     });
     this.periodService.periodAnnouncement$.subscribe((period) => {

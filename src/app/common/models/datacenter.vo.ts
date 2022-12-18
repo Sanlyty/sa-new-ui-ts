@@ -1,17 +1,17 @@
-import {System} from './system.vo';
-import {StorageEntityResponseDto} from './dtos/storage-entity-response.dto';
+import { System } from "./system.vo";
+import { StorageEntityResponseDto } from "./dtos/storage-entity-response.dto";
 
-export class Datacenter {
+export interface Datacenter {
   id: number;
   label: string;
-  systems: System[];
-  latitude: number;
-  longitude: number;
+  systems?: System[];
+  latitude?: number;
+  longitude?: number;
+}
 
-  static of(dto: StorageEntityResponseDto) {
-    const dc = new Datacenter();
-    dc.label = dto.storageEntity.name;
-    dc.id = dto.storageEntity.id;
-    return dc;
-  }
+export function datacenterOf(dto: StorageEntityResponseDto): Datacenter {
+  return {
+    id: dto.storageEntity.id,
+    label: dto.storageEntity.name,
+  };
 }

@@ -24,6 +24,7 @@ import { HttpLoading } from "./http-loading.interceptor";
 import { BreadcrumbComponent } from "./components/breadcrumb/breadcrumb.component";
 import { StorageConfigurationModule } from "./storage-configuration/storage-configuration.module";
 import { OverviewModule } from "./overview/overview.module";
+import { EmcGlobalStatisticsModule } from "./emc-global-statistics/emc-global-statistics.module";
 
 export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpLoading, multi: true },
@@ -43,6 +44,7 @@ export const httpInterceptorProviders = [
   ],
   imports: [
     GlobalStatisticsModule,
+    EmcGlobalStatisticsModule,
     SanInfrastructureModule,
     OverviewModule,
     BrowserModule,

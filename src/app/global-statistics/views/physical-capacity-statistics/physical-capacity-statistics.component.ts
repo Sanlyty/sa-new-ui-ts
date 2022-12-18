@@ -10,7 +10,6 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
-import { BusService } from "../../bus.service";
 import {
   SasiColumnBuilder,
   SasiTableOptions,
@@ -78,7 +77,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     protected metricService: MetricService,
-    protected bus: BusService,
     protected localStorageService: LocalStorageService
   ) {
     this.options.columns.push(
@@ -300,8 +298,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = +params.get("id");
-      this.bus.announceDatacenter(id);
-      this.bus.announceContext("physical-capacity");
       this.getTableData(id);
     });
     this.localStorageService

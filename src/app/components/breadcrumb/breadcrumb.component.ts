@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { distinctUntilChanged, filter } from "rxjs/operators";
 import { MetricService } from "../../metric.service";
-import { Datacenter } from "../../common/models/datacenter.vo";
+import { Datacenter, datacenterOf } from "../../common/models/datacenter.vo";
 
 export interface IBreadCrumb {
   label: string;
@@ -34,7 +34,7 @@ export class BreadcrumbComponent implements OnInit {
       )
       .subscribe(() => {
         this.metricService.getDataCenters().subscribe((dto) => {
-          this.dataCenters = dto.map(Datacenter.of);
+          this.dataCenters = dto.map(datacenterOf);
           this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
         });
       });
