@@ -32,30 +32,30 @@ export class DashboardComponent implements OnInit {
   currentColor = 0;
   perfGraphSeries = [];
   capacityGraphSeries = [];
-  perfMetricsType = [SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER];
-  logicalChangeType = SystemMetricType.LOGICAL_CHANGE_1M;
+  perfMetricsType = ["WORKLOAD", "TRANSFER"] as const;
+  logicalChangeType = "LOGICAL_CHANGE_MONTH";
   // TODO refactor to have only one of this 2 following arrays
   capacityMetricsType = [
-    SystemMetricType.SUBSCRIBED_CAPACITY,
-    SystemMetricType.LOGICAL_CAPACITY,
-    SystemMetricType.PHYSICAL_CAPACITY,
-    SystemMetricType.LOGICAL_CHANGE_1M,
-  ];
+    "SUBSCRIBED_CAPACITY",
+    "LOGICAL_CAPACITY",
+    "PHYSICAL_CAPACITY",
+    "LOGICAL_CHANGE_MONTH",
+  ] as const;
   displayCapacityType = [
-    SystemMetricType.SUBSCRIBED_CAPACITY,
-    SystemMetricType.LOGICAL_CAPACITY,
-    SystemMetricType.PHYSICAL_CAPACITY,
-  ];
+    "SUBSCRIBED_CAPACITY",
+    "LOGICAL_CAPACITY",
+    "PHYSICAL_CAPACITY",
+  ] as const;
   capacityMetricSimple = [
-    SystemMetricType.LOGICAL_CAPACITY,
-    SystemMetricType.PHYSICAL_CAPACITY,
-    SystemMetricType.SUBSCRIBED_CAPACITY,
-    SystemMetricType.WORKLOAD,
-    SystemMetricType.TRANSFER,
-  ];
+    "LOGICAL_CAPACITY",
+    "PHYSICAL_CAPACITY",
+    "SUBSCRIBED_CAPACITY",
+    "WORKLOAD",
+    "TRANSFER",
+  ] as const;
   regionOrder = [Region.EUROPE, Region.AMERICA, Region.ASIA];
   allMetricType = [...this.perfMetricsType, ...this.capacityMetricsType];
-  useKFormatter = [SystemMetricType.WORKLOAD];
+  useKFormatter = ["WORKLOAD"];
 
   constructor(
     private metricService: MetricService,
@@ -63,14 +63,12 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.metricLabels[SystemMetricType.WORKLOAD] = "Total Workload";
-    this.metricLabels[SystemMetricType.TRANSFER] = "Total Transfer";
-    this.metricLabels[SystemMetricType.LOGICAL_CAPACITY] = "Logical Capacity";
-    this.metricLabels[SystemMetricType.PHYSICAL_CAPACITY] = "Physical Capacity";
-    this.metricLabels[SystemMetricType.SUBSCRIBED_CAPACITY] =
-      "Subscribed Capacity";
-    this.metricLabels[SystemMetricType.LOGICAL_CHANGE_1M] =
-      "Monthly Changed (logical)";
+    this.metricLabels["WORKLOAD"] = "Total Workload";
+    this.metricLabels["TRANSFER"] = "Total Transfer";
+    this.metricLabels["LOGICAL_CAPACITY"] = "Logical Capacity";
+    this.metricLabels["PHYSICAL_CAPACITY"] = "Physical Capacity";
+    this.metricLabels["SUBSCRIBED_CAPACITY"] = "Subscribed Capacity";
+    this.metricLabels["LOGICAL_CHANGE_MONTH"] = "Monthly Changed (logical)";
 
     this.alertLabels[AlertType.CAPACITY_USAGE] = "Capacity Usage Events";
     this.alertLabels[AlertType.CPU] = "CPU Utilization Events";
@@ -130,7 +128,7 @@ export class DashboardComponent implements OnInit {
       );
     });
     this.metricService
-      .getGraphData([SystemMetricType.TRANSFER, SystemMetricType.WORKLOAD])
+      .getGraphData(["TRANSFER", "WORKLOAD"])
       .subscribe((dto) => {
         this.perfGraphSeries = dto.data.map((serie) => {
           return { name: serie.type, data: serie.data };
@@ -138,9 +136,9 @@ export class DashboardComponent implements OnInit {
       });
     this.metricService
       .getCapacityGraphData([
-        SystemMetricType.SUBSCRIBED_CAPACITY,
-        SystemMetricType.LOGICAL_CAPACITY,
-        SystemMetricType.PHYSICAL_CAPACITY,
+        "SUBSCRIBED_CAPACITY",
+        "LOGICAL_CAPACITY",
+        "PHYSICAL_CAPACITY",
       ])
       .subscribe((dto) => {
         this.capacityGraphSeries = dto.data.map((serie) => {
@@ -162,17 +160,14 @@ export class DashboardComponent implements OnInit {
           metric = this.findMetricInRegion(region, type);
         } else {
           // here should be switch for specific type and also throw exception if unknown type
-          const changeMetric = this.findMetricInRegion(
-            region,
-            SystemMetricType.CAPACITY_CHANGE_1M
-          );
+          const changeMetric = this.findMetricInRegion(region, "CHANGE_MONTH");
           const totalSaving = this.findMetricInRegion(
             region,
-            SystemMetricType.TOTAL_SAVING_EFFECT
+            "TOTAL_SAVING_EFFECT"
           );
           metric = new Metric();
           metric.unit = "GB";
-          metric.type = SystemMetricType.LOGICAL_CHANGE_1M;
+          metric.type = "LOGICAL_CHANGE_MONTH";
           metric.value = changeMetric.value * totalSaving.value;
         }
         if (metric === undefined) {

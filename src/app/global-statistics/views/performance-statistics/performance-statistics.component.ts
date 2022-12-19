@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MetricService, PeriodType } from "../../../metric.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
+import { ActivatedRoute } from "@angular/router";
 import { PeriodService } from "../../../period.service";
 import {
   SasiColumnBuilder,
@@ -47,7 +46,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.WORKLOAD)
+        .withIndex("WORKLOAD")
         .withLabel("Workload")
         .withTooltipText("Workload Average")
         .withColumnTooltipText(
@@ -60,7 +59,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.TRANSFER)
+        .withIndex("TRANSFER")
         .withLabel("Transfer")
         .withTooltipText("Transfer Average")
         .withColumnTooltipText(
@@ -73,7 +72,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.RESPONSE)
+        .withIndex("RESPONSE")
         .withLabel("Read Response")
         .withTooltipText("Read Response Average")
         .withColumnTooltipText(
@@ -86,7 +85,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.RESPONSE_WRITE)
+        .withIndex("RESPONSE_WRITE")
         .withLabel("Write Response")
         .withTooltipText("Write Response Average")
         .withColumnTooltipText(
@@ -99,7 +98,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CPU)
+        .withIndex("CPU_PERC")
         .withLabel("CPU")
         .withTooltipText("CPU Average")
         .withColumnTooltipText(
@@ -112,7 +111,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.HDD)
+        .withIndex("HDD_PERC")
         .withLabel("HDD")
         .withTooltipText("HDD Average")
         .withColumnTooltipText(
@@ -125,7 +124,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.WRITE_PENDING_PERC)
+        .withIndex("WRITE_PENDING_PERC")
         .withLabel("Write Pending")
         .withTooltipText("Write Pending Average")
         .withColumnTooltipText(
@@ -152,45 +151,45 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     this.options.altSortColumnName = "peak";
     this.options.sortColumnNames = ["sortId", "name"];
     this.options.sortType = SasiSortType.ASC;
+
+    this.options.cellDecoratorRules.push(
+      new AlertRule("CPU_PERC", new Threshold("text-orange", 80, 10000))
+    );
+    this.options.cellDecoratorRules.push(
+      new AlertRule(
+        "WRITE_PENDING_PERC",
+        new Threshold("text-orange", 30, 10000)
+      )
+    );
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const id = +params.get("id");
-      this.data = this.getTableData(id);
+      this.currentDataCenterId = Number(params.get("id"));
+      this.getTableData();
     });
     this.periodService.periodAnnouncement$.subscribe((period) => {
       if (this.currentPeriod !== period) {
         this.currentPeriod = period;
-        this.getTableData(this.currentDataCenterId);
+        this.getTableData();
       }
     });
     this.periodService.announceEnablePeriod(true);
     this.periodService.announcePeriod(this.currentPeriod);
-    this.options.cellDecoratorRules.push(
-      new AlertRule(
-        SystemMetricType.CPU,
-        new Threshold("text-orange", 80, 10000)
-      )
-    );
-    this.options.cellDecoratorRules.push(
-      new AlertRule(
-        SystemMetricType.WRITE_PENDING_PERC,
-        new Threshold("text-orange", 30, 10000)
-      )
-    );
   }
 
   ngOnDestroy(): void {
     this.periodService.announceEnablePeriod(false);
   }
 
-  getTableData(id: number): StorageEntityMetricDto[] {
-    this.currentDataCenterId = id;
+  getTableData(): StorageEntityMetricDto[] {
     this.metricService
-      .getPerformanceStatistics(id, this.currentPeriod)
+      .getPerformanceStatistics(this.currentDataCenterId, this.currentPeriod)
       .subscribe(
-        (data) => (this.data = MetricHandlerUtils.success(data)),
+        (data) => {
+          this.data = MetricHandlerUtils.success(data);
+          console.log(this.data);
+        },
         (error) => (this.data = MetricHandlerUtils.error(error))
       );
     return this.data;

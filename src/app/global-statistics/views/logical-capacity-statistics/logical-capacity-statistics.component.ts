@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import { SystemAggregatedStatistics } from "../../utils/weighted-arithmetic-mean.utils";
 import {
   SasiColumnBuilder,
@@ -25,25 +24,25 @@ import { SeTextFormatterComponent } from "../../../storage-configuration/se-text
 })
 export class LogicalCapacityStatisticsComponent implements OnInit {
   types = [
-    SystemMetricType.SUBSCRIBED_CAPACITY,
-    SystemMetricType.PHYSICAL_SUBS_PERC,
-    SystemMetricType.LOGICAL_SUBS_PERC,
-    SystemMetricType.NET_SUBS_PERC,
-    SystemMetricType.PHYSICAL_CAPACITY,
-    SystemMetricType.PHYSICAL_USED,
-    SystemMetricType.PHYSICAL_FREE,
-    SystemMetricType.PHYSICAL_USED_PERC,
-    SystemMetricType.LOGICAL_CAPACITY,
-    SystemMetricType.LOGICAL_USED,
-    SystemMetricType.LOGICAL_FREE,
-    SystemMetricType.LOGICAL_USED_PERC,
-    SystemMetricType.NET_TOTAL,
-    SystemMetricType.NET_USED,
-    SystemMetricType.NET_FREE,
-    SystemMetricType.NET_USED_PERC,
-    SystemMetricType.COMPRESS_RATIO,
-    SystemMetricType.DEDUP_RATIO,
-    SystemMetricType.TOTAL_SAVING_EFFECT,
+    "SUBSCRIBED_CAPACITY",
+    "PHYSICAL_SUBS_PERC",
+    "LOGICAL_SUBS_PERC",
+    "NET_SUBS_PERC",
+    "PHYSICAL_CAPACITY",
+    "PHYSICAL_USED",
+    "PHYSICAL_FREE",
+    "PHYSICAL_USED_PERC",
+    "LOGICAL_CAPACITY",
+    "LOGICAL_USED",
+    "LOGICAL_FREE",
+    "LOGICAL_USED_PERC",
+    "NET_TOTAL",
+    "NET_USED",
+    "NET_FREE",
+    "NET_USED_PERC",
+    "COMPRESSION_RATIO",
+    "DEDUP_RATIO",
+    "TOTAL_SAVING_EFFECT",
   ];
   data: StorageEntityMetricDto[] = [];
 
@@ -73,7 +72,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.SUBSCRIBED_CAPACITY)
+        .withIndex("SUBSCRIBED_CAPACITY")
         .withLabel("Total")
         .withColumnTooltipText("Total Subscribed capacity (TB) of the DP Pool.")
         .withComponent(SimpleFormatterComponent)
@@ -86,7 +85,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
 
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_SUBS_PERC)
+        .withIndex("PHYSICAL_SUBS_PERC")
         .withLabel("Physical Subs.")
         .withColumnTooltipText(
           "Physical Subscribed capacity (%) of the DP Pool."
@@ -100,7 +99,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_SUBS_PERC)
+        .withIndex("LOGICAL_SUBS_PERC")
         .withLabel("Logical Subs.")
         .withColumnTooltipText(
           "Logical Subscribed capacity (%) of the DP Pool."
@@ -114,7 +113,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_SUBS_PERC)
+        .withIndex("NET_SUBS_PERC")
         .withLabel("Net Subs.")
         .withColumnTooltipText("NET Subscribed capacity (%) of the DP Pool.")
         .withComponent(SimpleFormatterComponent)
@@ -127,7 +126,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_CAPACITY)
+        .withIndex("PHYSICAL_CAPACITY")
         .withLabel("Total")
         .withColumnTooltipText(
           "Total physical capacity (TB) of the DP Pool. Physical capacity = capacity of the real HW components (HDDs/FMDs/Spindles)."
@@ -143,7 +142,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_USED)
+        .withIndex("PHYSICAL_USED")
         .withLabel("Physical Used")
         .withColumnTooltipText(
           "Physically used capacity (TB) of the DP Pool. Meaning what is the physical occupation of data on HW components (HDDs/FMDs/Spindles) (so after compression and deduplication)"
@@ -157,7 +156,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_FREE)
+        .withIndex("PHYSICAL_FREE")
         .withLabel("Physical Free")
         .withColumnTooltipText(
           "Physically free capacity (TB) of the DP Pool. Meaning what is the physical free space on HW components (HDDs/FMDs/Spindles)"
@@ -171,7 +170,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_USED_PERC)
+        .withIndex("PHYSICAL_USED_PERC")
         .withLabel("Physical Used")
         .withColumnTooltipText(
           "Capacity which is physically stored on DP Pool HDD's in %"
@@ -186,7 +185,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_CAPACITY)
+        .withIndex("LOGICAL_CAPACITY")
         .withLabel("Total")
         .withColumnTooltipText(
           'Logical capacity (TB) of the DP Pool. Logical capacity is "virtual" capacity for non-spindle disk pools. It is calculated as [physical capacity] x [constant]. In common cases [constant] is set to 2 (because of default compression on FMDs)'
@@ -200,7 +199,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_USED)
+        .withIndex("LOGICAL_USED")
         .withLabel("Logical Used")
         .withColumnTooltipText(
           '\tLogical Used capacity (TB) of the DP Pool. Logical capacity is "virtual" capacity for non-spindle disk pools. It is calculated as [physical capacity] x [constant]. In common cases [constant] is set to 2'
@@ -214,7 +213,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_FREE)
+        .withIndex("LOGICAL_FREE")
         .withLabel("Logical Free")
         .withColumnTooltipText(
           'Logical Free capacity (TB) of the DP Pool. Logical capacity is "virtual" capacity for non-spindle disk pools. It is calculated as [physical capacity] x [constant]. In common cases [constant] is set to 2'
@@ -228,7 +227,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_USED_PERC)
+        .withIndex("LOGICAL_USED_PERC")
         .withLabel("Logical Used")
         .withColumnTooltipText(
           'Logical Used capacity (%) of the DP Pool. Logical capacity is "virtual" capacity for non-spindle disk pools.'
@@ -243,7 +242,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_TOTAL)
+        .withIndex("NET_TOTAL")
         .withLabel("Net Capacity")
         .withColumnTooltipText(
           "NET capacity = Capacity without any saving mechanism (Dedup/Compression). Calculated as [Physical Capacity] x [Total Saving Effect]"
@@ -259,7 +258,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_USED)
+        .withIndex("NET_USED")
         .withLabel("Net Used")
         .withColumnTooltipText(
           "NET capacity = Capacity without any saving mechanism (Dedup/Compression). Calculated as [Physical Used] x [Total Saving Effect]"
@@ -273,7 +272,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_FREE)
+        .withIndex("NET_FREE")
         .withLabel("Net Free")
         .withColumnTooltipText(
           "NET capacity = Capacity without any saving mechanism (Dedup/Compression). Calculated as [Physical Free] x [Total Saving Effect]"
@@ -287,7 +286,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_USED_PERC)
+        .withIndex("NET_USED_PERC")
         .withLabel("Net Used")
         .withColumnTooltipText(
           "NET capacity = Capacity without any saving mechanism (Dedup/Compression)."
@@ -302,7 +301,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.COMPRESS_RATIO)
+        .withIndex("COMPRESSION_RATIO")
         .withLabel("Comp Ratio")
         .withColumnTooltipText(
           "Compression Ratio of the FMD's in the DP Pool. Summary calculation is performed on pools with compression ration >0"
@@ -316,7 +315,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.DEDUP_RATIO)
+        .withIndex("DEDUP_RATIO")
         .withLabel("Dedup Ratio")
         .withColumnTooltipText(
           "Deduplication Ratio of the DP Pool. Summmary calculation is performed on pools with dedup ration >0)"
@@ -330,7 +329,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.TOTAL_SAVING_EFFECT)
+        .withIndex("TOTAL_SAVING_EFFECT")
         .withLabel("Saving effect")
         .withColumnTooltipText(
           "Total saving effect of Deduplication (SW feature) + Compression (FMD's). Summmary calculation is performed on pools with total saving effect >1)"
@@ -375,46 +374,37 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
       {
         name: "Subscription",
         columns: [
-          SystemMetricType.SUBSCRIBED_CAPACITY,
-          SystemMetricType.PHYSICAL_SUBS_PERC,
-          SystemMetricType.LOGICAL_SUBS_PERC,
-          SystemMetricType.NET_SUBS_PERC,
+          "SUBSCRIBED_CAPACITY",
+          "PHYSICAL_SUBS_PERC",
+          "LOGICAL_SUBS_PERC",
+          "NET_SUBS_PERC",
         ],
       },
       {
         name: "Physical",
         columns: [
-          SystemMetricType.PHYSICAL_CAPACITY,
-          SystemMetricType.PHYSICAL_USED,
-          SystemMetricType.PHYSICAL_FREE,
-          SystemMetricType.PHYSICAL_USED,
+          "PHYSICAL_CAPACITY",
+          "PHYSICAL_USED",
+          "PHYSICAL_FREE",
+          "PHYSICAL_USED",
         ],
       },
       {
         name: "Logical",
         columns: [
-          SystemMetricType.LOGICAL_CAPACITY,
-          SystemMetricType.LOGICAL_USED,
-          SystemMetricType.LOGICAL_FREE,
-          SystemMetricType.LOGICAL_USED,
+          "LOGICAL_CAPACITY",
+          "LOGICAL_USED",
+          "LOGICAL_FREE",
+          "LOGICAL_USED",
         ],
       },
       {
         name: "Net",
-        columns: [
-          SystemMetricType.NET_TOTAL,
-          SystemMetricType.NET_USED,
-          SystemMetricType.NET_FREE,
-          SystemMetricType.NET_SUBS_PERC,
-        ],
+        columns: ["NET_TOTAL", "NET_USED", "NET_FREE", "NET_SUBS_PERC"],
       },
       {
         name: "Savings",
-        columns: [
-          SystemMetricType.COMPRESS_RATIO,
-          SystemMetricType.DEDUP_RATIO,
-          SystemMetricType.TOTAL_SAVING_EFFECT,
-        ],
+        columns: ["COMPRESSION_RATIO", "DEDUP_RATIO", "TOTAL_SAVING_EFFECT"],
       },
     ];
   }

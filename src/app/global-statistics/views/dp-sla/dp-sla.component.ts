@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PeriodService } from "../../../period.service";
 import { MetricService, PeriodType } from "../../../metric.service";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import {
   SasiColumnBuilder,
   SasiTableOptions,
@@ -27,7 +26,7 @@ import { SeTextFormatterComponent } from "../../../storage-configuration/se-text
   ],
 })
 export class DpSlaComponent implements OnInit, OnDestroy {
-  types = [SystemMetricType.SLA_EVENTS, SystemMetricType.OUT_OF_SLA_TIME];
+  types = ["SLA_EVENTS", "OUT_OF_SLA_TIME"];
   currentPeriod: PeriodType = PeriodType.WEEK;
 
   options: SasiTableOptions = new SasiTableOptions();
@@ -52,7 +51,7 @@ export class DpSlaComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.SLA_EVENTS)
+        .withIndex("SLA_EVENTS")
         .withLabel("SLA Events")
         .withColumnTooltipText(
           "Count of breach SLA occuracnces per DP Pool. SLA treshold = >1ms write response time for at least 10mins time period"
@@ -64,7 +63,7 @@ export class DpSlaComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.OUT_OF_SLA_TIME)
+        .withIndex("OUT_OF_SLA_TIME")
         .withLabel("Out of SLA Time")
         .withColumnTooltipText(
           "Total time of breach SLA occuracnces per DP Pool."

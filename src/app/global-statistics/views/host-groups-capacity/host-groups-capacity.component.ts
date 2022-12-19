@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import { SystemAggregatedStatistics } from "../../utils/weighted-arithmetic-mean.utils";
 import {
   SasiColumnBuilder,
@@ -49,12 +48,12 @@ import { SeTextFormatterComponent } from "../../../storage-configuration/se-text
 })
 export class HostGroupsCapacityComponent implements OnInit {
   types = [
-    SystemMetricType.NET_TOTAL,
-    SystemMetricType.NET_USED,
-    SystemMetricType.NET_USED_PERC,
-    SystemMetricType.CAPACITY_CHANGE_1D,
-    SystemMetricType.CAPACITY_CHANGE_1W,
-    SystemMetricType.CAPACITY_CHANGE_1M,
+    "NET_TOTAL",
+    "NET_USED",
+    "NET_USED_PERC",
+    "CHANGE_DAY",
+    "CHANGE_WEEK",
+    "CHANGE_MONTH",
   ];
   data: StorageEntityMetricDto[] = []; // Todo caching data by dataCenters
 
@@ -84,7 +83,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.TIER)
+        .withIndex("TIER")
         .withLabel("Tier")
         .withColumnTooltipText(
           "Tier label - internal number of the Tier where VMware farm (HostGroup) is stored (reflects DP pool Tier)"
@@ -96,7 +95,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_TOTAL)
+        .withIndex("NET_TOTAL")
         .withLabel("Provisioned Capacity")
         .withColumnTooltipText(
           "Total provisioned capacity to servers (to Host Group)"
@@ -110,7 +109,7 @@ export class HostGroupsCapacityComponent implements OnInit {
 
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_USED)
+        .withIndex("NET_USED")
         .withLabel("Used Capacity")
         .withColumnTooltipText("Used capacity of servers in TB")
         .withComponent(SimpleFormatterComponent)
@@ -121,7 +120,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.NET_USED_PERC)
+        .withIndex("NET_USED_PERC")
         .withLabel("Used Capacity [%}")
         .withColumnTooltipText("Used capacity of servers in percentage")
         .withComponent(SimpleFormatterComponent)
@@ -133,7 +132,7 @@ export class HostGroupsCapacityComponent implements OnInit {
 
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1D)
+        .withIndex("CHANGE_DAY")
         .withLabel("Last Day Change")
         .withColumnTooltipText(
           "Calculated change in GB [Today]-[Yesterday] of USED capacity"
@@ -147,7 +146,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1W)
+        .withIndex("CHANGE_WEEK")
         .withLabel("Last Week Change")
         .withColumnTooltipText(
           "Calculated change in GB [Today]-[7 Days Back] of USED capacity"
@@ -161,7 +160,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1M)
+        .withIndex("CHANGE_MONTH")
         .withLabel("Last Month Change")
         .withColumnTooltipText(
           "Calculated change in GB [Today]-[30 Days Back] of USED capacity"

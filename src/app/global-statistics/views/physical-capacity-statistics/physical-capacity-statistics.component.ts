@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MetricService } from "../../../metric.service";
 import { SystemAggregatedStatistics } from "../../utils/weighted-arithmetic-mean.utils";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import {
   animate,
   state,
@@ -53,15 +52,15 @@ import { SeTextFormatterComponent } from "../../../storage-configuration/se-text
 })
 export class PhysicalCapacityStatisticsComponent implements OnInit {
   types = [
-    SystemMetricType.PHYSICAL_SUBS_PERC,
-    SystemMetricType.PHYSICAL_CAPACITY,
-    SystemMetricType.AVAILABLE_CAPACITY,
-    SystemMetricType.LOGICAL_USED_PERC,
-    SystemMetricType.PHYSICAL_USED_PERC,
-    SystemMetricType.COMPRESS_RATIO,
-    SystemMetricType.PREDICTION_L1,
-    SystemMetricType.PREDICTION_L2,
-    SystemMetricType.PREDICTION_L3,
+    "PHYSICAL_SUBS_PERC",
+    "PHYSICAL_CAPACITY",
+    "AVAILABLE_CAPACITY",
+    "LOGICAL_USED_PERC",
+    "PHYSICAL_USED_PERC",
+    "COMPRESSION_RATIO",
+    "PREDICTION_L1",
+    "PREDICTION_L2",
+    "PREDICTION_L3",
   ];
   data: StorageEntityMetricDto[] = []; // Todo caching data by dataCenters
 
@@ -92,7 +91,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_CAPACITY)
+        .withIndex("PHYSICAL_CAPACITY")
         .withLabel("Physical\nCapacity")
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
@@ -105,7 +104,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
 
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_SUBS_PERC)
+        .withIndex("PHYSICAL_SUBS_PERC")
         .withLabel("Physical Subs.")
         .withColumnTooltipText(
           "Physical Subscribed capacity (%) of the DP Pool."
@@ -117,7 +116,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.AVAILABLE_CAPACITY)
+        .withIndex("AVAILABLE_CAPACITY")
         .withLabel("Available\n" + "Capacity")
         .withColumnTooltipText(
           "Physically free capacity (TB) of the DP Pool. Meaning what is the physical free space on HW components (HDDs/FMDs/Spindles)"
@@ -129,7 +128,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_USED_PERC)
+        .withIndex("LOGICAL_USED_PERC")
         .withLabel("Logical Used")
         .withColumnTooltipText(
           'Logical Used capacity (%) of the DP Pool. Logical capacity is "virtual" capacity for non-spindle disk pools. It is calculated as [physical capacity] x [constant]. In common cases [constant] is set to 2'
@@ -141,7 +140,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PHYSICAL_USED_PERC)
+        .withIndex("PHYSICAL_USED_PERC")
         .withLabel("Physical Used")
         .withColumnTooltipText(
           "Capacity which is physically stored on DP Pool HDD's in %"
@@ -153,7 +152,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.TOTAL_SAVING_EFFECT)
+        .withIndex("TOTAL_SAVING_EFFECT")
         .withLabel("Total Savings")
         .withColumnTooltipText(
           "Total saving effect of Deduplication (SW feature) + Compression (FMD's). Summmary calculation is performed on pools with total saving effect >1)"
@@ -168,7 +167,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PREDICTION_L1)
+        .withIndex("PREDICTION_L1")
         .withLabel("Reach 80%")
         .withColumnTooltipText(
           'Prediction how many days left before reaching 80% treshold of "Physical Used [%]" metric.'
@@ -182,7 +181,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PREDICTION_L2)
+        .withIndex("PREDICTION_L2")
         .withLabel("Reach 85%")
         .withColumnTooltipText(
           'Prediction how many days left before reaching 85% treshold of "Physical Used [%]" metric.'
@@ -196,7 +195,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PREDICTION_L3)
+        .withIndex("PREDICTION_L3")
         .withLabel("Reach 88%")
         .withColumnTooltipText(
           'Prediction how many days left before reaching 88% treshold of "Physical Used [%]" metric.'
@@ -211,7 +210,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1D)
+        .withIndex("CHANGE_DAY")
         .withLabel("Change 1D")
         .withColumnTooltipText(
           'Calculated change of "Physical Capacity" in GB [Today]-[Yesterday] of the DP Pool'
@@ -225,7 +224,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1W)
+        .withIndex("CHANGE_WEEK")
         .withLabel("Change 1W")
         .withColumnTooltipText(
           'Calculated change of "Physical Capacity" in GB [Today]-[7 Days Back] of the DP Pool'
@@ -239,7 +238,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1M)
+        .withIndex("CHANGE_MONTH")
         .withLabel("Change 1M")
         .withColumnTooltipText(
           'Calculated change of "Physical Capacity" in GB [Today]-[30 Days Back] of the DP Pool'
@@ -275,22 +274,16 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columnAlign = "right";
 
     this.options.cellDecoratorRules.push(
-      new AlertRule(
-        SystemMetricType.PHYSICAL_USED_PERC,
-        new Threshold("text-green", 80, 84.9)
-      )
+      new AlertRule("PHYSICAL_USED_PERC", new Threshold("text-green", 80, 84.9))
     );
     this.options.cellDecoratorRules.push(
       new AlertRule(
-        SystemMetricType.PHYSICAL_USED_PERC,
+        "PHYSICAL_USED_PERC",
         new Threshold("text-alert-yellow", 85, 88)
       )
     );
     this.options.cellDecoratorRules.push(
-      new AlertRule(
-        SystemMetricType.PHYSICAL_USED_PERC,
-        new Threshold("text-red", 88, 10000)
-      )
+      new AlertRule("PHYSICAL_USED_PERC", new Threshold("text-red", 88, 10000))
     );
   }
 

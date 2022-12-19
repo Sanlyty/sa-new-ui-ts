@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PeriodService } from "../../../period.service";
 import { MetricService, PeriodType } from "../../../metric.service";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import {
   SasiColumnBuilder,
   SasiTableOptions,
@@ -30,7 +29,7 @@ import { SeTextFormatterComponent } from "../../../storage-configuration/se-text
   ],
 })
 export class AdaptersComponent implements OnInit, OnDestroy {
-  types = [SystemMetricType.IMBALANCE_EVENTS, SystemMetricType.IMBALANCE_PERC];
+  types = ["IMBALANCE_EVENTS", "IMBALANCE_PERC"];
   currentPeriod: PeriodType = PeriodType.WEEK;
 
   options: SasiTableOptions = new SasiTableOptions();
@@ -55,7 +54,7 @@ export class AdaptersComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.IMBALANCE_EVENTS)
+        .withIndex("IMBALANCE_EVENTS")
         .withLabel("Cha Imbalances")
         .withColumnTooltipText(
           "Count of Channel Adapater Pair imbalances. Treshold definition = 10% imbalance AND 20MB/s"
@@ -69,7 +68,7 @@ export class AdaptersComponent implements OnInit, OnDestroy {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.PORT_IMBALANCE_EVENTS)
+        .withIndex("PORT_IMBALANCE_EVENTS")
         .withLabel("Port Imbalances")
         .withColumnTooltipText(
           "Count of FE Port Pair Imbalances. Treshold definition = 10% imbalance AND 20MB/s"

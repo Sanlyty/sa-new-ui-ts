@@ -8,7 +8,6 @@ import { StorageEntityMetricDto } from "../../../common/models/dtos/storage-enti
 import { ActivatedRoute, Router } from "@angular/router";
 import { PeriodService } from "../../../period.service";
 import { RouteLinkFormatterComponent } from "../../../common/components/route-link-formatter/route-link-formatter.component";
-import { SystemMetricType } from "../../../common/models/metrics/system-metric-type.enum";
 import { SeTextFormatterComponent } from "../../../storage-configuration/se-text-formatter/se-text-formatter.component";
 import { AlertFormatterComponent } from "../../formatters/alert-formatter/alert-formatter.component";
 import { RowGroupTableComponent } from "../../../common/components/sasi-table/row-group-table/row-group-table.component";
@@ -59,7 +58,7 @@ export class ParityGroupEventsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.HDD)
+        .withIndex("HDD_PERC")
         .withLabel("Utilization")
         .withColumnTooltipText(
           "Average/Peak value of the Parity Group utilization within event time interval"
@@ -91,7 +90,7 @@ export class ParityGroupEventsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.DURATION)
+        .withIndex("DURATION")
         .withLabel("Duration")
         .withColumnTooltipText("Duration of the event")
         .withComponent(DurationFormatterComponent)

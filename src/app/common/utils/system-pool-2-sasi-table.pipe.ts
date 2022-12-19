@@ -3,7 +3,6 @@ import {
   SasiCell,
   SasiRow,
 } from "../components/sasi-table/sasi-table.component";
-import { SystemMetricType } from "../models/metrics/system-metric-type.enum";
 import { Metric } from "../models/metrics/metric.vo";
 import { StorageEntityMetricDto } from "../models/dtos/storage-entity-metric.dto";
 
@@ -42,11 +41,8 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
         row.subRows = this.transform(system.children, null, null);
         const metric = new Metric();
         metric.value = this.countPortImbalances(row.subRows);
-        metric.type = SystemMetricType.PORT_IMBALANCE_EVENTS;
-        row.cells[SystemMetricType.PORT_IMBALANCE_EVENTS] = new SasiCell(
-          metric.value,
-          metric
-        );
+        metric.type = "PORT_IMBALANCE_EVENTS";
+        row.cells["PORT_IMBALANCE_EVENTS"] = new SasiCell(metric.value, metric);
       }
       if (system.detail !== undefined) {
         row.cells["sortId"] = new SasiCell(system.detail.sortId, {
@@ -64,11 +60,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
 
   countPortImbalances(rows: SasiRow[]): number {
     return rows.filter(
-      (row) =>
-        parseInt(
-          row.getCell(SystemMetricType.PORT_IMBALANCE_EVENTS)?.value,
-          10
-        ) > 0
+      (row) => parseInt(row.getCell("PORT_IMBALANCE_EVENTS")?.value, 10) > 0
     ).length;
   }
 }

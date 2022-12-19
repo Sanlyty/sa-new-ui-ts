@@ -1,4 +1,4 @@
-import {SystemMetricType} from '../../common/models/metrics/system-metric-type.enum';
+import { SystemMetricType } from "../../common/models/metrics/system-metric-type.enum";
 
 class AggregatedStatistics {
   physicalSubstitution = 0;
@@ -38,7 +38,6 @@ export class SystemAggregatedStatistics extends AggregatedStatistics {
   dedupRatio = 0;
   totalSaving = 0;
 
-
   constructor(systemName: string) {
     super();
     this.system = systemName;
@@ -46,51 +45,51 @@ export class SystemAggregatedStatistics extends AggregatedStatistics {
 
   getValue(name: SystemMetricType) {
     switch (name) {
-      case SystemMetricType.SUBSCRIBED_CAPACITY:
+      case "SUBSCRIBED_CAPACITY":
         return this.subscriptionCapacity;
-      case SystemMetricType.PHYSICAL_SUBS_PERC:
+      case "PHYSICAL_SUBS_PERC":
         return this.physicalSubstitution;
-      case SystemMetricType.LOGICAL_SUBS_PERC:
+      case "LOGICAL_SUBS_PERC":
         return this.logicalSubstitution;
-      case SystemMetricType.PHYSICAL_CAPACITY:
+      case "PHYSICAL_CAPACITY":
         return this.physicalCapacity;
-      case SystemMetricType.LOGICAL_CAPACITY:
+      case "LOGICAL_CAPACITY":
         return this.physicalCapacity;
-      case SystemMetricType.AVAILABLE_CAPACITY:
+      case "AVAILABLE_CAPACITY":
         return this.availableCapacity;
-      case SystemMetricType.LOGICAL_USED:
+      case "LOGICAL_USED":
         return this.logicalUsed;
-      case SystemMetricType.LOGICAL_FREE:
+      case "LOGICAL_FREE":
         return this.logicalFree;
-      case SystemMetricType.PHYSICAL_USED:
+      case "PHYSICAL_USED":
         return this.physicalUsed;
-      case SystemMetricType.PHYSICAL_FREE:
+      case "PHYSICAL_FREE":
         return this.physicalFree;
-      case SystemMetricType.PHYSICAL_USED_PERC:
+      case "PHYSICAL_USED_PERC":
         return this.physicalUsedPerc;
-      case SystemMetricType.COMPRESS_RATIO:
+      case "COMPRESSION_RATIO":
         return this.compressionRatio;
-      case SystemMetricType.CAPACITY_CHANGE_1D:
+      case "CHANGE_DAY":
         return this.capacityChanged1D;
-      case SystemMetricType.CAPACITY_CHANGE_1W:
+      case "CHANGE_WEEK":
         return this.capacityChanged1W;
-      case SystemMetricType.CAPACITY_CHANGE_1M:
+      case "CHANGE_MONTH":
         return this.capacityChanged1M;
-      case SystemMetricType.LOGICAL_USED_PERC:
+      case "LOGICAL_USED_PERC":
         return this.logicalUsedPerc;
-      case SystemMetricType.NET_SUBS_PERC:
+      case "NET_SUBS_PERC":
         return this.netSubstitution;
-      case SystemMetricType.NET_TOTAL:
+      case "NET_TOTAL":
         return this.netTotal;
-      case SystemMetricType.NET_USED:
+      case "NET_USED":
         return this.netUsed;
-      case SystemMetricType.NET_FREE:
+      case "NET_FREE":
         return this.netFree;
-      case SystemMetricType.NET_USED_PERC:
+      case "NET_USED_PERC":
         return this.netUsedPerc;
-      case SystemMetricType.DEDUP_RATIO:
+      case "DEDUP_RATIO":
         return this.dedupRatio;
-      case SystemMetricType.TOTAL_SAVING_EFFECT:
+      case "TOTAL_SAVING_EFFECT":
         return this.totalSaving;
     }
   }
