@@ -26,7 +26,7 @@ import { SeTextFormatterComponent } from "../../../storage-configuration/se-text
 })
 export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
   currentPeriod: PeriodType = PeriodType.WEEK;
-  data: StorageEntityMetricDto[] = []; // Todo caching data by datacenters
+  data: StorageEntityMetricDto[] = [];
   options: SasiTableOptions = new SasiTableOptions();
   currentDataCenterId;
 
@@ -186,10 +186,7 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     this.metricService
       .getPerformanceStatistics(this.currentDataCenterId, this.currentPeriod)
       .subscribe(
-        (data) => {
-          this.data = MetricHandlerUtils.success(data);
-          console.log(this.data);
-        },
+        (data) => (this.data = MetricHandlerUtils.success(data)),
         (error) => (this.data = MetricHandlerUtils.error(error))
       );
     return this.data;

@@ -1,1 +1,7 @@
-<p>performance works!</p>
+<div class="tab-pane" *ngIf="data.length > 0">
+    <div class="container-fluid">
+      <div class="row">
+        <app-sasi-table [data]="data | systemPool2SasiTable: 'emcDashBoard'" [tableOptions]="options"></app-sasi-table>
+      </div>
+    </div>
+  </div>
