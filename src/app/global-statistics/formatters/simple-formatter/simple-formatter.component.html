@@ -4,6 +4,6 @@
   <span *ngIf="!isAlert()" tooltip="{{getTooltipMessage()}}" hide-delay="0"
         [innerHTML]="getValue() | formatThousands | safeHtml"
   [class.text-not-today]="!isTodayDate()"></span>
-  <span class="metric-unit">{{data.unit}}</span>
+  <span class="metric-unit"> {{data.unit}}</span>
 
 </div>

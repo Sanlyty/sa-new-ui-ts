@@ -9,6 +9,7 @@ import { VmwareComponent } from "./views/vmware/vmware.component";
 import { SaCommonModule } from "../common/sa-common.module";
 import { TooltipModule } from "ng2-tooltip-directive";
 import { FormsModule } from "@angular/forms";
+import { GlobalStatisticsModule } from "../global-statistics/global-statistics.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule } from "@angular/forms";
   imports: [
     CommonModule,
     EmcGlobalStatisticsRoutingModule,
+    GlobalStatisticsModule,
     SaCommonModule,
     TooltipModule,
     FormsModule,

@@ -84,7 +84,11 @@ import { ParityGroup2SasiTablePipe } from "./views/parity-group-events/parity-gr
     ParityGroup2SasiGroupTablePipe,
     ParityGroup2SasiTablePipe,
   ],
-  exports: [UnitFormatterComponent],
+  exports: [
+    UnitFormatterComponent,
+    AggregatedStatisticsComponent,
+    GroupedAggregatedStatisticsComponent,
+  ],
   imports: [
     CommonModule,
     GlobalStatisticsRoutingModule,

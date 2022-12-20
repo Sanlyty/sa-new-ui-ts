@@ -5,7 +5,7 @@
   <span *ngIf="!isAlert()" tooltip="{{getTooltipMessage()}}" hide-delay="0" [class.text-not-today]="!isTodayDate()">{{getValue() | formatThousands}} </span><span
   class="metric-unit">{{data.unit}}</span>
 </div>
-<div *ngIf="data != null" class="peak">
+<div *ngIf="data != null && hasPeak" class="peak">
   <span tooltip="{{label}} peak" hide-delay="0"><span class="text-muted"><i
     class="fa fa-angle-up text-red"></i>{{data.peak | formatThousands}} <span
     class="metric-unit">{{data.unit}}</span></span>

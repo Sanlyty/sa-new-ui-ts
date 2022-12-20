@@ -12,23 +12,7 @@ import { StorageEntityMetricDto } from "src/app/common/models/dtos/storage-entit
 import { UnitFormatterComponent } from "src/app/global-statistics/formatters/unit-formatter/unit-formatter.component";
 import { PeriodType } from "src/app/metric.service";
 import { PeriodService } from "src/app/period.service";
-
-type ColDef = {
-  id: string;
-  label: string;
-  altSort?: boolean;
-  formatterComponent?: any;
-};
-
-const quickDef = (
-  id: string,
-  label: string,
-  opts: Partial<Pick<ColDef, "altSort" | "formatterComponent">> = {}
-): ColDef => ({
-  id,
-  label,
-  ...opts,
-});
+import { buildCol, ColDef, quickCol } from "../../tableUtils";
 
 @Component({
   selector: "app-performance",
@@ -53,27 +37,17 @@ export class PerformanceComponent implements OnInit {
     this.options.sortColumnNames = ["sortId", "name"];
     this.options.sortType = SasiSortType.ASC;
 
-    this.options.columns = (<ColDef[]>[
-      quickDef("name", "Name", {
+    this.options.columns = [
+      quickCol("name", "Name", {
         formatterComponent: RouteLinkFormatterComponent,
       }),
-      quickDef("WORKLOAD", "Workload"),
-      quickDef("TRANSFER", "Transfer"),
-      quickDef("READ_RESPONSE", "Read Response"),
-      quickDef("WRITE_RESPONSE", "Write Response"),
-      quickDef("HDD", "HDD"),
-      quickDef("CACHE_WP", "Cache WP"),
-    ]).map((obj) =>
-      SasiColumnBuilder.getInstance()
-        .withIndex(obj.id)
-        .withLabel(obj.label)
-        .withTooltipText(`${obj.label} Average`)
-        // .withColumnTooltipText("")
-        .withComponent(obj.formatterComponent ?? UnitFormatterComponent)
-        .withAltSortEnable(obj.altSort ?? false)
-        .withIsAggregated(false)
-        .build()
-    );
+      quickCol("WORKLOAD", "Workload"),
+      quickCol("TRANSFER", "Transfer"),
+      quickCol("READ_RESPONSE", "Read Response"),
+      quickCol("WRITE_RESPONSE", "Write Response"),
+      quickCol("HDD", "HDD"),
+      quickCol("CACHE_WP", "Cache WP"),
+    ].map(buildCol());
   }
 
   ngOnInit(): void {
@@ -96,7 +70,7 @@ export class PerformanceComponent implements OnInit {
   }
 
   getTableData() {
-    fetch("/api/v2/emc/Performance")
+    fetch(`/api/v2/emc/Performance?period=${this.currentPeriod}`)
       .then((d) => d.json())
       .then((d) => (this.data = d));
   }

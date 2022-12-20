@@ -1,1 +1,15 @@
-<p>capacity works!</p>
+<div class="tab-pane" *ngIf="data.length > 0">
+    <div class="container-fluid">
+      <div class="row">
+        <app-sasi-table [data]="data | systemPool2SasiTable: 'emcDashBoard'" [tableOptions]="options"></app-sasi-table>
+
+      <app-aggregated-statistics
+        class='col-md-12 sticky-bottom'
+        [data]="data | systemPool2SasiGroupTable"
+        [selectedRows]="selectedRows"
+        [prefix]="options.storageNamePrefix"
+        [aggregatedColumns]="options.getAggregatedColumns()"
+      ></app-aggregated-statistics>
+      </div>
+    </div>
+  </div>
