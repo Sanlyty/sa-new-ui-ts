@@ -4,10 +4,8 @@
      [class.highlightColumn]="isColumnHighlighted(colIndex)"
      [class.alt-border]="column.altBorder"
      [class.alt-border-left]="column.altBorderLeft"
-     [class.text-right]="colIndex >= 1 && options.columnAlign === 'right'"
-     [class.text-center]="options.columnAlign !== 'right'"
      [class.center-margin]="colIndex == 0 && options.columnAlign === 'right'"
-     class="sasi-table-item sasi-table-data"
+     class="sasi-table-item sasi-table-data text-{{options.columnAlign}}"
      [@slideInOut]="isCollapsed">
 
 

@@ -7,6 +7,9 @@
 .sasi-table-item.text-center {
   justify-content: center;
 }
+.sasi-table-item.text-left {
+  justify-content: flex-start;
+}
 .sasi-table-item.center-margin {
   justify-content: flex-start;
   padding-left: 30px;

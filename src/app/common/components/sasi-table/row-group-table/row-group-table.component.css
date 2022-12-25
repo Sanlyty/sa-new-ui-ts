@@ -37,6 +37,9 @@
 .sasi-table-item.text-center {
   justify-content: center;
 }
+.sasi-table-item.text-left {
+  justify-content: flex-start;
+}
 
 .highlightColumn {
   background-color: #b4d1ee !important;

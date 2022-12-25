@@ -1,11 +1,18 @@
 <div class="tab-pane" *ngIf="data.length > 0">
   <div class="container-fluid">
     <div class="row col-md-12">
-      <app-sasi-table class="table-right" [data]="data | systemPool2SasiGroupTable: 'trends'"
-                      [tableOptions]="options"></app-sasi-table>
-      <app-aggregated-statistics class='col-md-12 sticky-bottom' [aggregatedColumns]="options.getAggregatedColumns()"
-                                 [data]="data | systemPool2SasiGroupTable" [selectedRows]="selectedRows"
-                                 [prefix]="options.storageNamePrefix"></app-aggregated-statistics>
+      <app-sasi-table
+        class="table-right"
+        [data]="data | systemPool2SasiGroupTable : 'trends'"
+        [tableOptions]="options"
+      ></app-sasi-table>
+      <app-aggregated-statistics
+        class="col-md-12 sticky-bottom"
+        [aggregatedColumns]="options.getAggregatedColumns()"
+        [data]="data | systemPool2SasiGroupTable"
+        [selectedRows]="selectedRows"
+        [prefix]="options.storageNamePrefix"
+      ></app-aggregated-statistics>
     </div>
   </div>
 </div>

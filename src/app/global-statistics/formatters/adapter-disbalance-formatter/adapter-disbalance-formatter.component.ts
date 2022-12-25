@@ -53,9 +53,7 @@ export class AdapterDisbalanceFormatterComponent
   }
 
   private resolveDisbalance(type: SystemMetricType): string {
-    if (this.rowData !== undefined && this.rowData.getCell(type) != null) {
-      return this.rowData.getCell(type).value;
-    }
+    return this.rowData?.getCell(type)?.value;
   }
 
   private isVisible() {

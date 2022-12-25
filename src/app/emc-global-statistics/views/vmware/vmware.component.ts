@@ -11,6 +11,8 @@ import { RouteLinkFormatterComponent } from "src/app/common/components/route-lin
 import { RowGroupTableComponent } from "src/app/common/components/sasi-table/row-group-table/row-group-table.component";
 import { GroupSortImpl } from "src/app/common/components/sasi-table/group-sort-impl";
 import { SimpleFormatterComponent } from "src/app/global-statistics/formatters/simple-formatter/simple-formatter.component";
+import { SasiWeightedArithmeticMeanUtils } from "src/app/global-statistics/utils/sasi-weighted-arithmetic-mean.utils";
+import { LocalStorageService } from "ngx-store-9";
 
 @Component({
   selector: "app-vmware",
@@ -22,17 +24,20 @@ export class VmwareComponent implements OnInit {
   options: SasiTableOptions = new SasiTableOptions();
   currentDataCenterId;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    protected localStorageService: LocalStorageService
+  ) {
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
-    this.options.labelColumnWidth = "13.78";
-    this.options.valueColumnWidth = "13.78";
     this.options.sortService = new GroupSortImpl();
-    this.options.altSortColumnName = "peak";
+    this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortColumnNames = ["name"];
+    this.options.storageNamePrefix = "emcVMware";
     this.options.sortType = SasiSortType.ASC;
     this.options.isDataGrouped = true;
     this.options.selectableRows = true;
+    this.options.groupLabelAlign = "left";
 
     this.options.columns = [
       quickCol("name", "Host", {
@@ -50,7 +55,7 @@ export class VmwareComponent implements OnInit {
       quickCol("USED_DAY", "Change Day", { isAggregated: true }),
       quickCol("USED_WEEK", "Change Week", { isAggregated: true }),
       quickCol("USED_MONTH", "Change Month", { isAggregated: true }),
-    ].map(buildCol());
+    ].map(buildCol({ formatter: SimpleFormatterComponent }));
   }
 
   ngOnInit(): void {

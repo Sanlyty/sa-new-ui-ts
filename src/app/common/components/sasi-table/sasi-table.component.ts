@@ -324,6 +324,7 @@ export class SasiTableOptions {
   public sortService: Sort;
   public aggregateValuesService: AggregateValueService;
   public columnAlign: string;
+  public groupLabelAlign: string = "center";
   public alertColumnSize: string;
   public controlColumnSize: string;
   public nameColumnSize: string;
