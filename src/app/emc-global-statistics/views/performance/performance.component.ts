@@ -45,6 +45,7 @@ export class PerformanceComponent implements OnInit {
       quickCol("TRANSFER", "Transfer"),
       quickCol("READ_RESPONSE", "Read Response"),
       quickCol("WRITE_RESPONSE", "Write Response"),
+      quickCol("CPU", "CPU"),
       quickCol("HDD", "HDD"),
       quickCol("CACHE_WP", "Cache WP"),
     ].map(buildCol());
