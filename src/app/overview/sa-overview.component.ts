@@ -19,6 +19,8 @@ const viewMap = {
   dpSla: "dpPoolBoard",
 };
 
+const withoutTime: string[] = ["trends", "emcTrendsBoard"];
+
 @Component({
   selector: "app-sa-overview",
   templateUrl: "./sa-overview.component.html",
@@ -60,7 +62,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
   }
 
   activateSvelteComponent() {
-    this.periodService.announceEnablePeriod(this.view !== "trends");
+    this.periodService.announceEnablePeriod(!withoutTime.includes(this.view));
     this.periodService.announcePeriod(PeriodType.WEEK);
 
     // Remove previous
