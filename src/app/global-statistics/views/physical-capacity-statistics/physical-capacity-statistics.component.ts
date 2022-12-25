@@ -302,10 +302,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
 
   getTableData(id: number): StorageEntityMetricDto[] {
     this.metricService.getCapacityStatistics(id).subscribe(
-      (data) => {
-        this.data = MetricHandlerUtils.success(data);
-        console.log(this.data);
-      },
+      (data) => (this.data = MetricHandlerUtils.success(data)),
       (error) => (this.data = MetricHandlerUtils.error(error))
     );
     return this.data;

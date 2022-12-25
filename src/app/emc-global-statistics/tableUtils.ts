@@ -4,9 +4,12 @@ import { UnitFormatterComponent } from "../global-statistics/formatters/unit-for
 export type ColDef = {
   id: string;
   label: string;
+  altLabel?: string;
   altSort?: boolean;
   formatterComponent?: any;
   altBorder?: boolean;
+  isAggregated?: boolean;
+  aggComponent?: any;
 };
 
 export const quickCol = (
@@ -25,12 +28,14 @@ export const buildCol =
     SasiColumnBuilder.getInstance()
       .withIndex(obj.id)
       .withLabel(obj.label)
+      .withAltLabel(obj.altLabel)
       .withTooltipText(`${obj.label} Average`)
       // .withColumnTooltipText("")
+      .withAggComponent(obj.aggComponent)
       .withComponent(
         obj.formatterComponent ?? opts.formatter ?? UnitFormatterComponent
       )
       .withAltSortEnable(obj.altSort ?? false)
       .withAltBorder(obj.altBorder ?? false)
-      .withIsAggregated(false)
+      .withIsAggregated(obj.isAggregated ?? false)
       .build();

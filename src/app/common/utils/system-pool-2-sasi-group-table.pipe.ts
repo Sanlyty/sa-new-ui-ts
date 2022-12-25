@@ -34,7 +34,6 @@ export class SystemPool2SasiGroupTablePipe implements PipeTransform {
       }
       row.groupRow = groupRow;
       row.rows = this.rowPipe.transform(system.children, context, system.name);
-      console.log(row);
       return row;
     });
   }

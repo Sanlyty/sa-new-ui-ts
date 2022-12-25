@@ -66,9 +66,7 @@ export class SaOverviewComponent implements OnInit, OnDestroy {
     this.periodService.announcePeriod(PeriodType.WEEK);
 
     // Remove previous
-    if (this.overviewInstance) {
-      this.overviewInstance.$destroy();
-    }
+    this.overviewInstance?.$destroy();
 
     this.overviewInstance = new OverviewView({
       target: this.rootElement.nativeElement,

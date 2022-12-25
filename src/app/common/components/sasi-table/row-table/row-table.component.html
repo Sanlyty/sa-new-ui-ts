@@ -1,23 +1,37 @@
-<div class="sasi-table-item sasi-table-controls"
-     *ngIf="options.selectableRows"
-     [@slideInOut]="isCollapsed">
+<div
+  class="sasi-table-item sasi-table-controls"
+  *ngIf="options.selectableRows"
+  [@slideInOut]="isCollapsed"
+>
   <i
-    [ngClass]="isSelectedRow(data.getCell('name').value) ? 'fa-check-square' : 'fa-square'" class="far fa-fw"
-    (click)="selectRow(data.getCell('name').value)"></i>
+    [ngClass]="
+      isSelectedRow(data.getCell('name').value)
+        ? 'fa-check-square'
+        : 'fa-square'
+    "
+    class="far fa-fw"
+    (click)="selectRow(data.getCell('name').value)"
+  ></i>
 </div>
-<div *ngIf="options.colControlFormatter != null"
-     class="sasi-table-item sasi-table-alerts"
-     [@slideInOut]="isCollapsed">
-  <app-cell-table [componentFormatter]="options.colControlFormatter" [data]="data" [label]="''"
-                  [options]="options"
+<div
+  *ngIf="options.colControlFormatter != null"
+  class="sasi-table-item sasi-table-alerts"
+  [@slideInOut]="isCollapsed"
+>
+  <app-cell-table
+    [componentFormatter]="options.colControlFormatter"
+    [data]="data"
+    [label]="''"
+    [options]="options"
   ></app-cell-table>
 </div>
 
-<app-column *ngFor="let column of options.getVisibleColumns(); let colIndex=index"
-            [data]="data"
-            [options]="options"
-            [column]="column"
-            [colIndex]="colIndex"
-            [isCollapsed]="isCollapsed"
+<app-column
+  *ngFor="let column of options.getVisibleColumns(); let colIndex = index"
+  [data]="data"
+  [options]="options"
+  [column]="column"
+  [colIndex]="colIndex"
+  [isCollapsed]="isCollapsed"
 >
 </app-column>
