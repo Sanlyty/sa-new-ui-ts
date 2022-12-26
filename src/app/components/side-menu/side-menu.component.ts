@@ -132,6 +132,10 @@ export class SideMenuComponent implements OnInit {
     });
   }
 
+  get hasDashboard(): boolean {
+    return this.mode === "hp";
+  }
+
   search(): void {
     if (this.searchExpression === "") {
       this.filteredItems = this.items;

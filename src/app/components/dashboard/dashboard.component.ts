@@ -8,6 +8,7 @@ import { RegionMetricDto } from "../../common/models/dtos/region-metric.dto";
 import { Region } from "../../common/models/dtos/region.enum";
 import { StorageConvertPipe } from "../../common/storage-convert.pipe";
 import { PeriodService } from "../../period.service";
+import feMode from "src/app/FeMode";
 
 declare var jquery: any;
 declare var $: any;
@@ -63,6 +64,10 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    feMode.then(() => {
+      location.replace("/global-statistics-emc/performance/-1");
+    });
+
     this.metricLabels["WORKLOAD"] = "Total Workload";
     this.metricLabels["TRANSFER"] = "Total Transfer";
     this.metricLabels["LOGICAL_CAPACITY"] = "Logical Capacity";

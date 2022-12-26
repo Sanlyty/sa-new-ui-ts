@@ -2,7 +2,7 @@
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <div class="top-part-menu">
-      <ul id="dash-link" class="sidebar-menu">
+      <ul id="dash-link" class="sidebar-menu" *ngIf="hasDashboard">
         <li><a href=""><i class="fa fa-home"></i><span>Main dashboard</span></a></li>
       </ul>
       <ul id="dash-menu" class="sidebar-menu" data-widget="tree">
