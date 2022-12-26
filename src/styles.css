@@ -18,3 +18,8 @@ a.sidebar-toggle::before {
     font-size: large;
     white-space: nowrap;
 }
+
+.thicc-table .sasi-table-item:not(.group-label) {
+    padding-left: 20px;
+    white-space: nowrap;
+}

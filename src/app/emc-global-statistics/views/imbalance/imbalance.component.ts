@@ -50,7 +50,7 @@ export class ImbalanceComponent implements OnInit {
       quickCol("name", "Name", {
         formatterComponent: EmptyFormatterComponent,
       }),
-      quickCol("IMBALANCE_EVENTS", "WWN Imbalance", {
+      quickCol("IMBALANCE_EVENTS", "Host Imbalance", {
         formatterComponent: AdapterDisbalanceFormatterComponent,
         aggComponent: SimpleFormatterComponent,
         isAggregated: true,
