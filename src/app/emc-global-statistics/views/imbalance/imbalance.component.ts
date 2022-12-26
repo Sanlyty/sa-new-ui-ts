@@ -3,12 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { RouteLinkFormatterComponent } from "src/app/common/components/route-link-formatter/route-link-formatter.component";
 import { GroupSortAggregateValueImpl } from "src/app/common/components/sasi-table/group-sort-aggregate-value.impl";
 import { RowGroupTableComponent } from "src/app/common/components/sasi-table/row-group-table/row-group-table.component";
-import { RowTableComponent } from "src/app/common/components/sasi-table/row-table/row-table.component";
-import {
-  SasiSortType,
-  SasiTableOptions,
-} from "src/app/common/components/sasi-table/sasi-table.component";
-import { SimpleSortImpl } from "src/app/common/components/sasi-table/simple-sort-impl";
+import { SasiTableOptions } from "src/app/common/components/sasi-table/sasi-table.component";
 import { StorageEntityMetricDto } from "src/app/common/models/dtos/storage-entity-metric.dto";
 import { AdapterDisbalanceFormatterComponent } from "src/app/global-statistics/formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component";
 import { AlertFormatterComponent } from "src/app/global-statistics/formatters/alert-formatter/alert-formatter.component";
@@ -44,7 +39,7 @@ export class ImbalanceComponent implements OnInit {
     this.options.valueColumnWidth = "36.5";
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
-    this.options.sortColumnNames = ["sortId", "name"];
+    this.options.sortColumnNames = ["name"];
 
     this.options.columns = [
       quickCol("name", "Name", {
