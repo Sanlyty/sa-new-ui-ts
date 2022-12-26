@@ -64,8 +64,10 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    feMode.then(() => {
-      location.replace("/global-statistics-emc/performance/-1");
+    feMode.then(({ mode }) => {
+      if (mode !== "hp") {
+        location.replace("/global-statistics-emc/performance/-1");
+      }
     });
 
     this.metricLabels["WORKLOAD"] = "Total Workload";
