@@ -6,6 +6,7 @@ export type ColDef = {
   label: string;
   altLabel?: string;
   altSort?: boolean;
+  tooltip?: string;
   formatterComponent?: any;
   altBorder?: boolean;
   isAggregated?: boolean;
@@ -30,7 +31,7 @@ export const buildCol =
       .withLabel(obj.label)
       .withAltLabel(obj.altLabel)
       .withTooltipText(`${obj.label} Average`)
-      // .withColumnTooltipText("")
+      .withColumnTooltipText(obj.tooltip)
       .withAggComponent(obj.aggComponent)
       .withComponent(
         obj.formatterComponent ?? opts.formatter ?? UnitFormatterComponent

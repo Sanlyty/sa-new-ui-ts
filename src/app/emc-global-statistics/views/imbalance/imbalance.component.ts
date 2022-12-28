@@ -48,6 +48,7 @@ export class ImbalanceComponent implements OnInit {
       quickCol("IMBALANCE_EVENTS", "Host Imbalance", {
         formatterComponent: AdapterDisbalanceFormatterComponent,
         aggComponent: SimpleFormatterComponent,
+        tooltip: "Imbalance Treshold => 5% AND 10MB/s",
         isAggregated: true,
       }),
     ].map(buildCol());
