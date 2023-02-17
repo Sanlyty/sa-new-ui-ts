@@ -178,9 +178,10 @@ export class StorageLocationComponent implements OnInit {
             .subscribe((capacityData) => {
               capacityData.forEach((dc) =>
                 dc.children.forEach((system) => {
-                  this.lastDataUpdate[system.id] = system.metrics.filter(
-                    (metric) => metric.type === "WORKLOAD"
-                  )[0].date;
+                  this.lastDataUpdate[system.id] =
+                    system.metrics.filter(
+                      (metric) => metric.type === "WORKLOAD"
+                    )?.[0]?.date ?? new Date();
                 })
               );
               this.data = data;
